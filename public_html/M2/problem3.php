@@ -10,6 +10,9 @@ function bePositive($arr)
     echo "<br>Positive output:<br>";
     //note: use the $arr variable, don't directly touch $a1-$a4
     //TODO use echo to output all of the values as positive (even if they were originally positive) and maintain the original datatype
+
+    //rrd42 - 9/25/2023
+
     foreach ($arr as $num) {
         if (is_string($num)) {
             if (strpos($num, '-') === 0) {

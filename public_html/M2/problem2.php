@@ -10,6 +10,8 @@ function getTotal($arr)
     //note: use the $arr variable, don't directly touch $a1-$a4
     //TODO do adding here
 
+    //rrd42 - 9/25/2023
+
     foreach ($arr as $num) {
         $total += $num;
     }
@@ -18,7 +20,7 @@ function getTotal($arr)
 
     $total = round($total, 2);
 
-    echo "The total is " . var_export($total, true);
+    echo "The total is " . var_export(number_format($total, 2), true);
 }
 echo "Problem 2: Adding Floats<br>";
 ?>
