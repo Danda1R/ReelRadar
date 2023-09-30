@@ -7,12 +7,27 @@
       window.addEventListener('load', () => {
         console.log('loaded via javascript');
         //TODO: add any extra onload processing you may need here
+        getCurrentSelection();
       });
       function getCurrentSelection() {
         setTimeout(() => {
           //added this delay here as some solutions may require it to update properly (i.e., click code may complete before the navigation changes)
           //TODO: add code for processing the current selection
           //Note: likely you'll want to call updateCurrentPage towards the end
+          const links = document.querySelectorAll('nav ul li a');
+
+          // Add a click event listener to each link
+
+          var linkText = 'Start';
+
+          links.forEach((link) => {
+            link.addEventListener('click', function (event) {
+              linkText = this.textContent; // Get the text content of the clicked link
+              updateCurrentPage(linkText);
+              console.log(`Clicked link with text: ${linkText}`);
+              // You can do further processing here
+            });
+          });
         }, 100);
       }
     </script>
