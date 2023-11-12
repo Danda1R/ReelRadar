@@ -1,0 +1,49 @@
+.alert-success {
+  background-color: green;
+}
+
+.alert-warning {
+  background-color: yellow;
+}
+
+.alert-danger {
+  background-color: red;
+}
+
+.alert-info {
+  background-color: teal;
+}
+nav li {
+  display: inline;
+  background-color: rgb(245, 208, 129);
+}
+nav li a {
+  color: rgb(53, 10, 31);
+}
+
+body {
+  background-color: rgb(248, 227, 180);
+  color: rgb(0, 0, 0);
+}
+
+input[type='submit'] {
+  background-color: #aa8c04;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='email']:focus {
+  background-color: lightblue;
+}
+
+table,
+th,
+td {
+  border: 1px solid;
+}
