@@ -1,6 +1,6 @@
 <table><tr><td> <em>Assignment: </em> IT202 Milestone1 Deliverable</td></tr>
 <tr><td> <em>Student: </em> Rishik Danda (rrd42)</td></tr>
-<tr><td> <em>Generated: </em> 11/12/2023 2:52:31 PM</td></tr>
+<tr><td> <em>Generated: </em> 11/12/2023 2:59:50 PM</td></tr>
 <tr><td> <em>Grading Link: </em> <a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT202-007-F23/it202-milestone1-deliverable/grade/rrd42" target="_blank">Grading</a></td></tr></table>
 <table><tr><td> <em>Instructions: </em> <ol><li>Checkout Milestone1 branch</li><li>Create a milestone1.md file in your Project folder</li><li>Git add/commit/push this empty file to Milestone1 (you'll need the link later)</li><li>Fill in the deliverable items<ol><li>For each feature, add a direct link (or links) to the expected file the implements the feature from Heroku Prod (I.e,&nbsp;<a href="https://mt85-prod.herokuapp.com/Project/register.php">https://mt85-prod.herokuapp.com/Project/register.php</a>)</li></ol></li><li>Ensure your images display correctly in the sample markdown at the bottom</li><ol><li>NOTE: You may want to try to capture as much checklist evidence in your screenshots as possible, you do not need individual screenshots and are recommended to combine things when possible. Also, some screenshots may be reused if applicable.</li></ol><li>Save the submission items</li><li>Copy/paste the markdown from the "Copy markdown to clipboard link" or via the download button</li><li>Paste the code into the milestone1.md file or overwrite the file</li><li>Git add/commit/push the md file to Milestone1</li><li>Double check the images load when viewing the markdown file (points will be lost for invalid/non-loading images)</li><li>Make a pull request from Milestone1 to dev and merge it (resolve any conflicts)<ol><li>Make sure everything looks ok on heroku dev</li></ol></li><li>Make a pull request from dev to prod (resolve any conflicts)<ol><li>Make sure everything looks ok on heroku prod</li></ol></li><li>Submit the direct link from github prod branch to the milestone1.md file (no other links will be accepted and will result in 0)</li></ol></td></tr></table>
 <table><tr><td> <em>Deliverable 1: </em> Feature: User will be able to register a new account </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
@@ -146,6 +146,9 @@
 </td></tr>
 <tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Frrd42%2F2023-11-10T19.18.43Screenshot%202023-11-10%20at%202.18.21%E2%80%AFPM.png.webp?alt=media&token=4b108ce8-117d-470c-9097-962a1cb8adfe"/></td></tr>
 <tr><td> <em>Caption:</em> <p>Changing the profile with an empty email and the email and username already<br>in use<br></p>
+</td></tr>
+<tr><td><img width="768px" src="https://firebasestorage.googleapis.com/v0/b/learn-e1de9.appspot.com/o/assignments%2Frrd42%2F2023-11-12T19.59.34Screenshot%202023-11-12%20at%202.57.46%E2%80%AFPM.png.webp?alt=media&token=c1db5f72-ad16-4618-b750-eb7fbcc973c7"/></td></tr>
+<tr><td> <em>Caption:</em> <p>Successfully changing the user name  from rrd42 to sandwichman<br></p>
 </td></tr>
 </table></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Add before and after screenshots of the Users table when a user edits their profile</td></tr>
