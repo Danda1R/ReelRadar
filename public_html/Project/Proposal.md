@@ -6,7 +6,7 @@
 
 ### Project Board Link: https://github.com/users/Danda1R/projects/9
 
-### Website Link: (Heroku Prod of Project folder)
+### Website Link: https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project
 
 ### API Link: (the link to the documentation of your chosen API)
 
