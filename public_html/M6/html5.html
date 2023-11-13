@@ -6,6 +6,8 @@
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
 
+    //rrd42 - 11/12/23
+
     // Key Codes
     var W = 87;
     var S = 83;
@@ -88,6 +90,7 @@
     }
 
     // Reset the ball's position and speed after scoring
+    //rrd42 - 11/12/23
     function resetBall() {
       ball.x = canvas.width / 2 - ball.w / 2;
       ball.y = canvas.height / 2 - ball.w / 2;
@@ -107,6 +110,7 @@
     // Bounce the ball off of a paddle
     function bounceBall() {
       // Increase and reverse the X speed
+      //rrd42 - 11/12/23
       ball.c = '#000000'.replace(/0/g, function () {
         return (~~(Math.random() * 16)).toString(16);
       });
@@ -133,6 +137,7 @@
     }
 
     // Listen for keydown events
+    //rrd42 - 11/12/23
     canvas.addEventListener('keydown', function (e) {
       if (e.keyCode === W) {
         keys.W = true;
@@ -161,6 +166,7 @@
     });
 
     // Listen for keyup events
+    //rrd42 - 11/12/23
     canvas.addEventListener('keyup', function (e) {
       if (e.keyCode === W) {
         keys.W = false;
@@ -200,14 +206,15 @@
       context.fillText('Click to Start', canvas.width / 2, canvas.height / 3);
       context.font = '14px Arial';
       context.textAlign = 'left';
+      //rrd42 - 11/12/23
       context.fillText(
-        'Player 1: W (up) and S (down)',
+        'Player 1: W (up), S (down), A (left), D (right)',
         5,
         (canvas.height / 3) * 2
       );
       context.textAlign = 'right';
       context.fillText(
-        'Player 2: UP (up) and DOWN (down)',
+        'Player 2: UP (up), DOWN (down), LEFT (left), RIGHT (right)',
         canvas.width - 5,
         (canvas.height / 3) * 2
       );
@@ -250,6 +257,7 @@
     function draw() {
       erase();
       // Move the paddles
+      //rrd42 - 11/12/23
       if (keys.W) {
         leftPaddle.y -= leftPaddle.s;
       }
