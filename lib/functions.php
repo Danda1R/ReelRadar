@@ -24,3 +24,12 @@ require(__DIR__ . "/reset_session.php");
 require(__DIR__ . "/get_url.php");
 
 require(__DIR__ . "/render_functions.php");
+
+//Manage API table data
+require(__DIR__ . "/save_data.php");
+
+require(__DIR__ . "/get_columns.php");
+
+require(__DIR__ . "/input_map.php");
+
+require(__DIR__ . "/get_rows.php");
