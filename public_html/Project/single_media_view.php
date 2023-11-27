@@ -93,7 +93,10 @@ WHERE
     }
 
     ?>
-
+    <div>
+        <a href="admin/edit_media.php?id=<?php echo $media_id; ?>">Edit</a>
+        <a href="admin/delete_media.php?id=<?php echo $media_id; ?>">Delete</a>
+    </div>
     <div class="card">
         <div class="media-details">
             <h2><?php echo htmlspecialchars($results[0]['title']); ?></h2>
@@ -106,12 +109,6 @@ WHERE
             <p>Is An Episode: <?php echo htmlspecialchars($results[0]['isEpisode']); ?></p>
             <img src="<?php echo htmlspecialchars($results[0]['image_url']); ?>" alt="Media Image">
             <p><?php echo htmlspecialchars($results[0]['image_caption']); ?></p>
-
-            <!-- Links for edit and delete -->
-            <p>
-                <a href="admin/delete_media.php?id=<?php echo $row['media_id']; ?>">Delete</a>
-                <a href="admin/edit_media.php?id=<?php echo $row['media_id']; ?>">Edit</a>
-            </p>
         </div>
 
         <!-- Add more detailed information about the media as needed -->

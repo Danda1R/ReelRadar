@@ -110,11 +110,10 @@ JOIN
                     <p>Genre: <?php echo htmlspecialchars($row['genre_name']); ?></p>
                     <img src="<?php echo htmlspecialchars($row['media_image_url']); ?>" alt="Media Image">
 
-                    <p>
-                        <a href="single_media_view.php?id=<?php echo $row['media_id']; ?>">View</a>
-                        <a href="admin/delete_media.php?id=<?php echo $row['media_id']; ?>">Delete</a>
-                        <a href="admin/edit_media.php?id=<?php echo $row['media_id']; ?>">Edit</a>
-                    </p>
+                    <a href="single_media_view.php?id=<?php echo $row['media_id']; ?>">View</a>
+                    <a href="admin/delete_media.php?id=<?php echo $row['media_id']; ?>">Delete</a>
+                    <a href="admin/edit_media.php?id=<?php echo $row['media_id']; ?>">Edit</a>
+
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
