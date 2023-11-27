@@ -35,15 +35,13 @@
     $table = se($table, null, null, false);
     $db = getDB();
 
-    // Default limit for records per page
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
     $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
 
-    // Validate if the limit is within the range (1-100)
     $limit = min(max($limit, 1), 100);
 
-    // Default query without search or sorting
     $query = "SELECT
+    Media.id AS media_id,
     Media.title AS media_title,
     Media_Details.year AS media_year,
     Media_Details.image_url AS media_image_url,
@@ -103,7 +101,6 @@ JOIN
     }
     ?>
 
-    <!-- HTML/CSS for the card-based gallery -->
     <div class="card-gallery">
         <?php if (count($results) > 0) : ?>
             <?php foreach ($results as $row) : ?>
@@ -112,6 +109,12 @@ JOIN
                     <p>Year: <?php echo htmlspecialchars($row['media_year']); ?></p>
                     <p>Genre: <?php echo htmlspecialchars($row['genre_name']); ?></p>
                     <img src="<?php echo htmlspecialchars($row['media_image_url']); ?>" alt="Media Image">
+
+                    <p>
+                        <a href="single_media_view.php?id=<?php echo $row['media_id']; ?>">View</a>
+                        <a href="admin/delete_media.php?id=<?php echo $row['media_id']; ?>">Delete</a>
+                        <a href="admin/edit_media.php?id=<?php echo $row['media_id']; ?>">Edit</a>
+                    </p>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
