@@ -33,3 +33,7 @@ require(__DIR__ . "/get_columns.php");
 require(__DIR__ . "/input_map.php");
 
 require(__DIR__ . "/get_rows.php");
+
+require(__DIR__ . "/api_helper.php");
+
+require(__DIR__ . "/media_mapping.php");
