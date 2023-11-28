@@ -34,6 +34,11 @@
 
     $results = search_media($table, $_GET);
 
+    $sort = isset($_GET['sort']) && in_array($_GET['sort'], $sortableColumns) ? $_GET['sort'] : 'media_title'; // Default sorting by title
+    $sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'DESC' : 'ASC'; // Default order ASC
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+
     //echo "<pre>" . var_export(count($results), true) . "</pre>";
 
     if (count($results) == 0) {
@@ -43,7 +48,7 @@
     ?>
 
     <form action="" method="GET" id="searchAndSortForm">
-        <input type="text" name="search" placeholder="Search by title, year, or genre" value="<?php echo htmlspecialchars($search); ?>">
+        <input type="text" name="search" class="search-bar" placeholder="Search by title, year, or genre" value="<?php echo htmlspecialchars($search); ?>">
         <label for="limit">Limit:</label>
         <input type="number" id="limit" name="limit" min="1" max="100" value="<?php echo htmlspecialchars($limit); ?>">
         <label for="sort">Sort by:</label>
