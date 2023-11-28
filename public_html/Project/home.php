@@ -2,7 +2,6 @@
 require(__DIR__ . "/../../partials/nav.php");
 ?>
 
-<link rel="stylesheet" href="<?php echo get_url('styles.css'); ?>">
 <h1 class="header">Home</h1>
 
 <section>
