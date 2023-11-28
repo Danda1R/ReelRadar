@@ -17,8 +17,8 @@
         }
 
         .card img {
-            width: 100%;
-            height: auto;
+            width: auto;
+            height: 300px;
         }
     </style>
 </head>
@@ -127,12 +127,18 @@ JOIN
                     <p>Genre: <?php echo htmlspecialchars($row['genre_name']); ?></p>
                     <img src="<?php echo htmlspecialchars($row['media_image_url']); ?>" alt="Media Image">
 
-                    <a href="single_media_view.php?id=<?php echo $row['media_id']; ?>">View</a>
-                    <a href="admin/delete_media.php?id=<?php echo $row['media_id']; ?>">Delete</a>
-                    <a href="admin/edit_media.php?id=<?php echo $row['media_id']; ?>">Edit</a>
+                    <div class="button-container">
+                        <a href="single_media_view.php?id=<?php echo $row['media_id']; ?>" class="button">View</a>
+                        <a href="admin/delete_media.php?id=<?php echo $row['media_id']; ?>" class="button delete-button">Delete</a>
+                        <a href="admin/edit_media.php?id=<?php echo $row['media_id']; ?>" class="button edit-button">Edit</a>
+                    </div>
 
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
     </div>
 </body>
+
+<?php
+require(__DIR__ . "/../../partials/footer.php");
+?>

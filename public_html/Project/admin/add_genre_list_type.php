@@ -39,3 +39,7 @@ get_array("https://moviesdatabase.p.rapidapi.com/titles/utils/titleTypes", "Medi
 <div class="container-fluid">
     <h1>Genre, List, and Type Databases Have Been Updated</h1>
 </div>
+
+<?php
+require_once(__DIR__ . "/../../../partials/footer.php");
+?>

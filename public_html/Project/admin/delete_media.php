@@ -153,9 +153,9 @@ WHERE
     }
 
     ?>
-    <div>
-        <a href="../single_view_media.php?id=<?php echo $media_id; ?>">View</a>
-        <a href="edit_media.php?id=<?php echo $media_id; ?>">Edit</a>
+    <div class="button-container-left">
+        <a href="../single_media_view.php?id=<?php echo $media_id; ?>" class="button">View</a>
+        <a href="edit_media.php?id=<?php echo $media_id; ?>" class=" button edit-button">Edit</a>
     </div>
     <div class="card">
         <div class="media-details">
@@ -189,3 +189,7 @@ WHERE
 </body>
 
 </html>
+
+<?php
+require_once(__DIR__ . "/../../../partials/footer.php");
+?>

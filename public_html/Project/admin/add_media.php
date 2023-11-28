@@ -77,6 +77,7 @@ $types = get_rows("Media_Type", "id, name");
         <input class="btn btn-primary" type="submit" value="Create" name="submit" />
     </form>
 </div>
+
 <?php
-//note we need to go up 1 more directory
 require_once(__DIR__ . "/../../../partials/footer.php");
+?>

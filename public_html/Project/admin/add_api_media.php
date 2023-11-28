@@ -175,3 +175,7 @@ $types = get_rows("Media_Type", "id, name");
         </div>
     </div>
 </div>
+
+<?php
+require_once(__DIR__ . "/../../../partials/footer.php");
+?>
