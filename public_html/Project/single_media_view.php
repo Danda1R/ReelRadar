@@ -48,6 +48,7 @@
 
     $query = "SELECT
     MD.original_title AS title,
+    MD.api_id,
     MD.isSeries,
     MD.isEpisode,
     MD.year,
@@ -100,6 +101,12 @@ WHERE
     <div class="card">
         <div class="media-details">
             <h2><?php echo htmlspecialchars($results[0]['title']); ?></h2>
+            <?php if ($results[0]['api_id'] !== null) : ?>
+                <p>API ID: <?php echo htmlspecialchars($results[0]['api_id']); ?></p>
+            <?php endif; ?>
+            <?php if ($results[0]['api_id'] == null) : ?>
+                <p>API ID: <?php echo "Not From The API" ?></p>
+            <?php endif; ?>
             <p>Year: <?php echo htmlspecialchars($results[0]['year']); ?></p>
             <p>Release Date: <?php echo htmlspecialchars($results[0]['release_date']); ?></p>
             <p>Genre: <?php echo htmlspecialchars($results[0]['genre_name']); ?></p>
