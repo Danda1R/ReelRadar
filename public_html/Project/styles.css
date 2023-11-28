@@ -26,24 +26,126 @@ body {
   color: rgb(0, 0, 0);
 }
 
-input[type='submit'] {
-  background-color: #aa8c04;
-  border: none;
-  color: white;
-  padding: 8px 16px;
+h1.header {
+  padding: 20px;
+  margin: 20px;
+  background-color: #f86d6d;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+section {
+  padding: 20px;
+  margin: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  height: 50px; /* Height of the footer */
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 15px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.footer {
+  height: 24px;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 25px;
+  background-image: none;
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-position: 0% 0%;
+  position: fixed;
+  bottom: 0pt;
+}
+
+.footer_contents {
+  height: 24px;
+  width: 1000px;
+  margin: auto;
+}
+
+/* Hide dropdown menu by default */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%; /* Position dropdown below the parent */
+  left: 0;
+  z-index: 1;
+  /* Additional styling for appearance */
+  background-color: #fff;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Show dropdown menu on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Additional styling for dropdown links */
+.dropdown-menu li {
+  display: block;
+  margin: 5px 0;
+}
+
+.dropdown-menu li a {
   text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
+  color: #333;
+  /* Additional styles as needed */
 }
 
-input[type='text']:focus,
-input[type='password']:focus,
-input[type='email']:focus {
-  background-color: lightblue;
+/* Styles for the button container */
+.button-container {
+  text-align: center; /* Center align the buttons */
+  margin-top: 20px; /* Add space from the top */
 }
 
-table,
-th,
-td {
-  border: 1px solid;
+.button-container-left {
+  text-align: left; /* Center align the buttons */
+  margin-top: 20px; /* Add space from the top */
+  margin-left: 20px;
+}
+
+/* Styles for the buttons */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 0 10px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #333;
+  border: 1px solid #333;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Delete button style */
+.delete-button {
+  background-color: #d9534f; /* Red color */
+  border-color: #d9534f;
+}
+
+/* Edit button style */
+.edit-button {
+  background-color: #5bc0de; /* Blue color */
+  border-color: #5bc0de;
+}
+
+/* Hover effect for buttons */
+.button:hover {
+  background-color: #555;
+  color: #fff;
 }
