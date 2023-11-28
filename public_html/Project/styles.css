@@ -149,3 +149,8 @@ footer {
   background-color: #555;
   color: #fff;
 }
+
+.search-bar {
+  width: 300px; /* Set your desired width here */
+  /* You can adjust the width value as needed */
+}
