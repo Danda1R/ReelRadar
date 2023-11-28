@@ -8,7 +8,7 @@ if (!has_role("Admin")) {
 
 if (isset($_POST['submit_title_year'])) {
 
-    echo "<pre>" . var_export($_POST, true) . "</pre>";
+    //echo "<pre>" . var_export($_POST, true) . "</pre>";
     $exactMatch = $_POST['exact_match'] == 'on' ? true : false;
     $result = get(
         "https://moviesdatabase.p.rapidapi.com/titles/search/title/" . rawurlencode($_POST['title']),
@@ -61,7 +61,7 @@ if (isset($_POST['submit_title_year'])) {
 
 // Check if the "Add Random by Genre, List & Type" form is submitted
 if (isset($_POST['submit_genre_list_type'])) {
-    echo "<pre>" . var_export($_POST, true) . "</pre>";
+    //echo "<pre>" . var_export($_POST, true) . "</pre>";
     $result = get(
         "https://moviesdatabase.p.rapidapi.com/titles/random",
         "MEDIA-X-RapidAPI-Key",
