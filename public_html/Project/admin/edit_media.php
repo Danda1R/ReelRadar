@@ -101,9 +101,9 @@ if (count($results) == 0) {
 
 ?>
 <div class="container-fluid">
-    <div>
-        <a href="../single_media_view.php?id=<?php echo $media_id; ?>">View</a>
-        <a href="delete_media.php?id=<?php echo $media_id; ?>">Delete</a>
+    <div class="button-container-left">
+        <a href="../single_media_view.php?id=<?php echo $media_id; ?>" class="button">View</a>
+        <a href="delete_media.php?id=<?php echo $media_id; ?>" class=" button edit-button">Edit</a>
     </div>
     <h1>Edit Media</h1>
     <form method="POST">
@@ -161,3 +161,5 @@ if (count($results) == 0) {
 <?php
 //note we need to go up 1 more directory
 require_once(__DIR__ . "/../../../partials/footer.php");
+require_once(__DIR__ . "/../../../partials/footer.php");
+?>

@@ -7,3 +7,10 @@
  * Similar concept as functions.php
  */
 require_once(__DIR__ . "/flash.php");
+?>
+
+<div class="footer">
+
+    <div class="footer_contents">2023 - Media Gallery - Rishik Danda</div>
+
+</div>

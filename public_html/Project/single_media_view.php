@@ -94,9 +94,9 @@ WHERE
     }
 
     ?>
-    <div>
-        <a href="admin/edit_media.php?id=<?php echo $media_id; ?>">Edit</a>
-        <a href="admin/delete_media.php?id=<?php echo $media_id; ?>">Delete</a>
+    <div class="button-container-left">
+        <a href="admin/edit_media.php?id=<?php echo $media_id; ?>" class="button">Edit</a>
+        <a href="admin/delete_media.php?id=<?php echo $media_id; ?>" class="button edit-button">Delete</a>
     </div>
     <div class="card">
         <div class="media-details">
@@ -125,3 +125,7 @@ WHERE
 </body>
 
 </html>
+
+<?php
+require(__DIR__ . "/../../partials/footer.php");
+?>
