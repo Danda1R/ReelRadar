@@ -96,8 +96,8 @@ JOIN
     //echo "<pre>" . var_export(count($results), true) . "</pre>";
 
     if (count($results) == 0) {
-        flash("No results available", "warning");
-        die(header("Location: list_media.php"));
+        flash("There are no current media available. Please add some.", "warning");
+        die(header("Location: home.php"));
     }
     ?>
 
