@@ -2,7 +2,7 @@
 require(__DIR__ . "/../../../partials/nav.php");
 
 if (!has_role("Admin")) {
-    flash("You don't have permission to view this page", "warning");
+    flash("You must be an Admin to update the Genre/Type/List database", "warning");
     die(header("Location: " . get_url("home.php")));
 }
 

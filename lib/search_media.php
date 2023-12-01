@@ -14,6 +14,7 @@ function search_media($table)
     Media.id AS media_id,
     Media.title AS media_title,
     Media_Details.year AS media_year,
+    Media_Details.api_id,
     Media_Details.image_url AS media_image_url,
     Media_Genre.name AS genre_name
     FROM

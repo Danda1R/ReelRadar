@@ -132,6 +132,12 @@ footer {
   transition: background-color 0.3s, color 0.3s;
 }
 
+.back-button {
+  background-color: #ffffff; /* Red color */
+  border-color: #ffffff;
+  color: #000000;
+}
+
 /* Delete button style */
 .delete-button {
   background-color: #d9534f; /* Red color */

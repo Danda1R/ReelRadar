@@ -2,7 +2,7 @@
 require(__DIR__ . "/../../../partials/nav.php");
 
 if (!has_role("Admin")) {
-    flash("You don't have permission to view this page", "warning");
+    flash("You must be an Admin to add API media", "warning");
     die(header("Location: " . get_url("home.php")));
 }
 
@@ -32,6 +32,8 @@ if (isset($_POST['submit_title_year'])) {
     $data = $data["data"];
     $output = [];
 
+    $num = 0;
+
     foreach ($data["results"] as $index => $details) {
         $output = array("api_id" => $details["id"]);
         $output = $output + array("original_title" => $details["titleText"]["text"]);
@@ -55,8 +57,10 @@ if (isset($_POST['submit_title_year'])) {
 
         $final_id = save_data("Media", $media_columns, ["submit"], false);
 
-        flash("You have added " . $final_id . " medias to the website", "success");
+        if ($final_id > 0)
+            $num++;
     }
+    flash("You have added " . $num . " medias to the website", "success");
 }
 
 // Check if the "Add Random by Genre, List & Type" form is submitted
@@ -84,7 +88,9 @@ if (isset($_POST['submit_genre_list_type'])) {
     $data = $data["data"];
     $output = [];
 
-    echo "<pre>" . var_export($data, true) . "</pre>";
+    //echo "<pre>" . var_export($data, true) . "</pre>";
+
+    $num = 0;
 
     foreach ($data["results"] as $index => $details) {
         $output = array("api_id" => $details["id"]);
@@ -100,16 +106,22 @@ if (isset($_POST['submit_genre_list_type'])) {
         $ignore = ["id", "modified", "created", "sumbit"];
         $id = save_data("Media_Details", $output, $ignore, false);
 
+        $genre_id = get_genretypelist_id("Media_Genre", $_POST['genre']);
+        $list_id = get_genretypelist_id("Media_List", $_POST['list']);
+        $type_id = get_genretypelist_id("Media_Type", $_POST['type']);
+
         $media_columns = [
-            "title" => $output['original_title'], "details_id" => $id, "type_id" => 1,
-            "list_id" => 1, "genre_id" => 1
+            "title" => $output['original_title'], "details_id" => $id, "type_id" => $type_id[0]["id"],
+            "list_id" => $list_id[0]["id"], "genre_id" => $genre_id[0]["id"]
         ];
 
         //echo "<pre>" . var_export($media_columns, true) . "</pre>";
 
         $final_id = save_data("Media", $media_columns, ["submit"], false);
-        flash("You have added " . $final_id . " medias to the website", "success");
+        if ($final_id > 0)
+            $num++;
     } // Important to stop further execution after redirecting
+    flash("You have added " . $num . " medias to the website", "success");
 }
 
 $genres = get_rows("Media_Genre", "id, name");

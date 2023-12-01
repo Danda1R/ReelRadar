@@ -3,19 +3,28 @@
 require(__DIR__ . "/../../../partials/nav.php");
 
 if (!has_role("Admin")) {
-    flash("You don't have permission to view this page", "warning");
-    die(header("Location: $BASE_PATH" . "/home.php"));
+    flash("You must be an Admin to edit media", "warning");
+    die(header("Location: $BASE_PATH" . "/list_media.php"));
 }
 
-$ignore = ["id", "modified", "created", "api_id", "api_image_id", "sumbit"];
+$media_id = isset($_GET['id']) ? $_GET['id'] : null;
+$sortableColumns = ['title', 'year', 'genre_name'];
+$sort = isset($_GET['sort']) && in_array($_GET['sort'], $sortableColumns) ? $_GET['sort'] : 'media_title'; // Default sorting by title
+$sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'DESC' : 'ASC'; // Default order ASC
+$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+$ignore = ["id", "modified", "created", "api_id", "api_image_id", "submit"];
+
+$update_ignore = ["genre", "type", "list", "sumbit"];
 
 if (isset($_POST["submit"])) {
     //echo "<pre>" . var_export($_POST, true) . "</pre>";
 
     //$detail_columns = remove_columns($_POST, $ignore);
-    $id = save_data("Media_Details", $_POST, $ignore, true);
+    $id = update_details_data("Media_Details", $_POST, $update_ignore, true, $media_id);
     if ($id > 0) {
-        flash("Created Media Details with id $id", "success");
+        flash("Edited Media Details with id $id", "success");
 
         $media_columns = [
             "title" => $_POST['original_title'], "details_id" => $id, "type_id" => $_POST['genre'],
@@ -24,9 +33,9 @@ if (isset($_POST["submit"])) {
 
         //echo "<pre>" . var_export($media_columns, true) . "</pre>";
 
-        $final_id = save_data("Media", $media_columns, ["submit"], false);
+        $final_id = update_media_data("Media", $media_columns, ["submit"], false, $media_id);
         if ($final_id > 0) {
-            flash("Created Media with id $final_id", "success");
+            flash("Edited Media with id $final_id", "success");
         }
     }
 }
@@ -40,8 +49,6 @@ $types = get_rows("Media_Type", "id, name");
 $table = "Media";
 
 $table = se($table, null, null, false);
-
-$media_id = isset($_GET['id']) ? $_GET['id'] : null;
 
 // Validate the ID (perform necessary checks based on your application logic)
 // Redirect back to list page with a message for an invalid ID
@@ -63,8 +70,9 @@ if (count($results) == 0) {
 ?>
 <div class="container-fluid">
     <div class="button-container-left">
-        <a href="../single_media_view.php?id=<?php echo $media_id; ?>" class="button">View</a>
-        <a href="delete_media.php?id=<?php echo $media_id; ?>" class=" button edit-button">Edit</a>
+        <a href="../list_media.php?search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button back-button">Back</a>
+        <a href="../single_media_view.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button">View</a>
+        <a href="delete_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button delete-button">Delete</a>
     </div>
     <h1>Edit Media</h1>
     <form method="POST">

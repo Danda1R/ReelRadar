@@ -17,7 +17,8 @@ function list_single_media($table)
     $db = getDB();
 
     $query = "SELECT
-    MD.original_title AS title,
+    MD.id,
+    MD.original_title,
     MD.api_id,
     MD.isSeries,
     MD.isEpisode,
