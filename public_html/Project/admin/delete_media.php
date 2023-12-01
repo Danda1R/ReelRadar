@@ -30,13 +30,18 @@
     require(__DIR__ . "/../../../partials/flash.php");
 
     if (!has_role("Admin")) {
-        flash("You don't have permission to view this page", "warning");
-        die(header("Location: $BASE_PATH" . "/home.php"));
+        flash("You must be an Admin to delete media", "warning");
+        die(header("Location: $BASE_PATH" . "/list_media.php"));
     }
 
     $table = "Media";
 
     $media_id = isset($_GET['id']) ? $_GET['id'] : null;
+    $sortableColumns = ['title', 'year', 'genre_name'];
+    $sort = isset($_GET['sort']) && in_array($_GET['sort'], $sortableColumns) ? $_GET['sort'] : 'media_title'; // Default sorting by title
+    $sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'DESC' : 'ASC'; // Default order ASC
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
 
     // Validate the ID (perform necessary checks based on your application logic)
     // Redirect back to list page with a message for an invalid ID
@@ -106,18 +111,19 @@
             }
 
             flash("Successfully deleted the media", "warning");
-            die(header("Location: " . get_url("list_media.php")));
+            die(header("Location: " . "../list_media.php?search=$search&limit=$limit&sort=$sort&order=$sortOrder"));
         }
     }
 
     ?>
     <div class="button-container-left">
-        <a href="../single_media_view.php?id=<?php echo $media_id; ?>" class="button">View</a>
-        <a href="edit_media.php?id=<?php echo $media_id; ?>" class=" button edit-button">Edit</a>
+        <a href="../list_media.php?search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button back-button">Back</a>
+        <a href="../single_media_view.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button">View</a>
+        <a href="edit_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class=" button edit-button">Edit</a>
     </div>
     <div class="card">
         <div class="media-details">
-            <h2><?php echo htmlspecialchars($results[0]['title']); ?></h2>
+            <h2><?php echo htmlspecialchars($results[0]['original_title']); ?></h2>
             <p>Year: <?php echo htmlspecialchars($results[0]['year']); ?></p>
             <p>Release Date: <?php echo htmlspecialchars($results[0]['release_date']); ?></p>
             <p>Genre: <?php echo htmlspecialchars($results[0]['genre_name']); ?></p>
