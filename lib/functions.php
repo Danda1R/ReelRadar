@@ -39,3 +39,7 @@ require(__DIR__ . "/api_helper.php");
 require(__DIR__ . "/search_media.php");
 
 require(__DIR__ . "/list_single_media.php");
+
+require(__DIR__ . "/update_data.php");
+
+require(__DIR__ . "/get_id.php");

@@ -3,16 +3,34 @@
 require(__DIR__ . "/../../../partials/nav.php");
 
 if (!has_role("Admin")) {
-    flash("You don't have permission to view this page", "warning");
+    flash("You must be an Admin to add media", "warning");
     die(header("Location: $BASE_PATH" . "/home.php"));
 }
 
 $ignore = ["id", "modified", "created", "api_id", "api_image_id", "sumbit"];
 
 if (isset($_POST["submit"])) {
-    //echo "<pre>" . var_export($_POST, true) . "</pre>";
+    error_log("Session data: " . var_export($_POST, true));
+    if ($_POST["isSeries"] != '1' and $_POST["isSeries"] != '0') {
+        flash("isSeries can only be 0 or 1", "warning");
+        die(header("Location: $BASE_PATH" . "/admin/add_media.php"));
+    }
 
-    //$detail_columns = remove_columns($_POST, $ignore);
+    if ($_POST["isEpisode"] != 1 and $_POST["isEpisode"] != 0) {
+        flash("isEpisode can only be 0 or 1", "warning");
+        die(header("Location: $BASE_PATH" . "/admin/add_media.php"));
+    }
+
+    if (strtotime($_POST["year"]) === false) {
+        flash("The year is invalid", "warning");
+        die(header("Location: $BASE_PATH" . "/admin/add_media.php"));
+    }
+
+    if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_POST["release_date"])) {
+        flash("The date is invalid. It should be formatted as yyyy-mm-dd", "warning");
+        die(header("Location: $BASE_PATH" . "/admin/add_media.php"));
+    }
+
     $id = save_data("Media_Details", $_POST, $ignore, true);
     if ($id > 0) {
         flash("Created Media Details with id $id", "success");
@@ -21,8 +39,6 @@ if (isset($_POST["submit"])) {
             "title" => $_POST['original_title'], "details_id" => $id, "type_id" => $_POST['genre'],
             "list_id" => $_POST["list"], "genre_id" => $_POST["type"]
         ];
-
-        //echo "<pre>" . var_export($media_columns, true) . "</pre>";
 
         $final_id = save_data("Media", $media_columns, ["submit"], false);
         if ($final_id > 0) {
@@ -42,7 +58,6 @@ $types = get_rows("Media_Type", "id, name");
     <h1>Add Media</h1>
     <form method="POST">
         <?php foreach ($columns as $index => $column) : ?>
-            <?php /* Lazily ignoring fields via hardcoded array*/ ?>
             <?php if (!in_array($column["Field"], $ignore)) : ?>
                 <div class="mb-4">
                     <label class="form-label" for="<?php se($column, "Field"); ?>"><?php se($column, "Field"); ?></label>

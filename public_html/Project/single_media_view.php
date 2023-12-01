@@ -31,6 +31,12 @@
     require(__DIR__ . "/../../partials/flash.php");
 
     $table = "Media";
+    $media_id = isset($_GET['id']) ? $_GET['id'] : null;
+    $sortableColumns = ['title', 'year', 'genre_name'];
+    $sort = isset($_GET['sort']) && in_array($_GET['sort'], $sortableColumns) ? $_GET['sort'] : 'media_title'; // Default sorting by title
+    $sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'DESC' : 'ASC'; // Default order ASC
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
 
     $results = list_single_media($table, $_GET);
     //echo "<pre>" . var_export(count($results), true) . "</pre>";
@@ -42,12 +48,13 @@
 
     ?>
     <div class="button-container-left">
-        <a href="admin/edit_media.php?id=<?php echo $media_id; ?>" class="button">Edit</a>
-        <a href="admin/delete_media.php?id=<?php echo $media_id; ?>" class="button edit-button">Delete</a>
+        <a href="list_media.php?search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button back-button">Back</a>
+        <a href="admin/edit_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button edit-button">Edit</a>
+        <a href="admin/delete_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button delete-button">Delete</a>
     </div>
     <div class="card">
         <div class="media-details">
-            <h2><?php echo htmlspecialchars($results[0]['title']); ?></h2>
+            <h2><?php echo htmlspecialchars($results[0]['original_title']); ?></h2>
             <?php if ($results[0]['api_id'] !== null) : ?>
                 <p>API ID: <?php echo htmlspecialchars($results[0]['api_id']); ?></p>
             <?php endif; ?>
