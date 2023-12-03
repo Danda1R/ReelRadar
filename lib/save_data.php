@@ -53,7 +53,7 @@ function save_data($table, $data, $ignore = ["submit"], $checkDuplicate = false)
         return $db->lastInsertId();
     } catch (PDOException $e) {
         error_log(var_export($e->errorInfo, true));
-        flash("One of the fields is not in proper format", "danger");
+        flash("This media has already been added", "warning");
         return -1;
     }
 }

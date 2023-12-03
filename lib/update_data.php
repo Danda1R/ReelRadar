@@ -13,7 +13,7 @@ function update_details_data($table, $data, $ignore, $checkDuplicate, $media_id)
             $stmt->execute();
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            flash("One of the fields is not in proper format", "danger");
+            flash("This description already exists!", "danger");
             error_log(var_export($e, true));
             return -1;
         }
@@ -60,12 +60,12 @@ function update_details_data($table, $data, $ignore, $checkDuplicate, $media_id)
         return $results["details_id"];
     } catch (PDOException $e) {
         error_log(var_export($e, true));
-        flash("One of the fields is not in proper format", "danger");
+        flash("One of the fields is not in proper format12313", "danger");
         return -1;
     }
 }
 
-function update_media_data($table, $data, $ignore, $media_id)
+function update_media_data($table, $data, $ignore, $checkDuplicate, $media_id)
 {
     $table = se($table, null, null, false);
 
@@ -96,7 +96,7 @@ function update_media_data($table, $data, $ignore, $media_id)
     } catch (PDOException $e) {
         error_log(var_export($e, true));
         error_log("error");
-        flash("One of the fields is not in proper format", "danger");
+        flash("One of the fields is not in proper format12312", "danger");
         return -1;
     }
 }
