@@ -48,8 +48,8 @@ if (isset($_POST["submit"])) {
         flash("Edited Media Details with id $id", "success");
 
         $media_columns = [
-            "title" => $_POST['original_title'], "details_id" => $id, "type_id" => $_POST['genre'],
-            "list_id" => $_POST["list"], "genre_id" => $_POST["type"]
+            "title" => $_POST['original_title'], "details_id" => $id, "type_id" => $_POST['type'],
+            "list_id" => $_POST["list"], "genre_id" => $_POST["genre"]
         ];
 
         //echo "<pre>" . var_export($media_columns, true) . "</pre>";
