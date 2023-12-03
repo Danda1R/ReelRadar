@@ -1,6 +1,6 @@
 <table><tr><td> <em>Assignment: </em> IT202 Milestone 2 API Project</td></tr>
 <tr><td> <em>Student: </em> Rishik Danda (rrd42)</td></tr>
-<tr><td> <em>Generated: </em> 12/2/2023 10:09:51 PM</td></tr>
+<tr><td> <em>Generated: </em> 12/2/2023 10:14:33 PM</td></tr>
 <tr><td> <em>Grading Link: </em> <a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT202-007-F23/it202-milestone-2-api-project/grade/rrd42" target="_blank">Grading</a></td></tr></table>
 <table><tr><td> <em>Instructions: </em> <ol><li>Checkout Milestone2 branch</li><li>Create a new markdown file called milestone2.md</li><li>git add/commit/push immediate</li><li>Fill in the below deliverables</li><li>At the end copy the markdown and paste it into milestone2.md</li><li>Add/commit/push the changes to Milestone2</li><li>PR Milestone2 to dev and verify</li><li>PR dev to prod and verify</li><li>Checkout dev locally and pull changes to get ready for Milestone 3</li><li>Submit the direct link to this new milestone2.md file from your GitHub prod branch to Canvas</li></ol><p>Note: Ensure all images appear properly on github and everywhere else. Images are only accepted from dev or prod, not local host. All website links must be from prod (you can assume/infer this by getting your dev URL and changing dev to prod).</p></td></tr></table>
 <table><tr><td> <em>Deliverable 1: </em> Define the appropriate table or tables for your API </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="https://user-images.githubusercontent.com/54863474/211707773-e6aef7cb-d5b2-4053-bbb1-b09fc609041e.png"></td></tr>
@@ -52,7 +52,7 @@
 <tr><td> <em>Sub-Task 3: </em> Misc Checklist</td></tr>
 <tr><td> <em>Response:</em> <p>The combination of the name and the release year makes the entities unique.<br>If you try to add a media with the same name and release<br>year as an existing media, then the insertion will fail and will not<br>be added. For API-added media, the api_id is a unique key in the<br>SQL creation. Therefore, if more than one of the same media from the<br>API is added, it will fail and not be added. Only Admins can<br>create entities.<br></p><br></td></tr>
 <tr><td> <em>Sub-Task 4: </em> Add a direct link to this file on Heroku Prod</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-3cbbb1b8bda5.herokuapp.com/Project/admin/add_media.php">https://it202-rrd42-prod-3cbbb1b8bda5.herokuapp.com/Project/admin/add_media.php</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/admin/add_media.php">https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/admin/add_media.php</a> </td></tr>
 <tr><td> <em>Sub-Task 5: </em> Add any related PRs for this task</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Danda1R/rrd42-IT202-007/pull/58">https://github.com/Danda1R/rrd42-IT202-007/pull/58</a> </td></tr>
 </table></td></tr>
@@ -77,7 +77,7 @@
 <tr><td> <em>Sub-Task 2: </em> Explanation</td></tr>
 <tr><td> <em>Response:</em> <p>Logged-in users can view this page and view the individual pages of each<br>entity. However, only admins can access the edit and delete pages of each<br>entity.<div><br></div><div>The server goes through the Media table and gets the ID, name, release<br>year, genre, image link, and API_ID of each media based on the limit.<br>The page then loops through each media, creating a card with all of<br>the information. For example, if the API_id is null (meaning it is manually<br>created), then the page will write that in place of the API ID.<br>There are also links for each card that uses the ID to take<br>the user to each view, delete, and edit page.</div><div><br></div><div>The filter/searching form will create<br>a get request that is used to append to the SQL Select statement.<br>This includes using the WHERE clause of searching, ORDER BY for ascending or<br>descending and by title/year/genre, and the&nbsp;LIMIT clause for the number of return data.</div><br></p><br></td></tr>
 <tr><td> <em>Sub-Task 3: </em> Add a direct link to this file on Heroku Prod</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-3cbbb1b8bda5.herokuapp.com/Project/list_media.php?search=&limit=10&sort=title&order=ASC">https://it202-rrd42-prod-3cbbb1b8bda5.herokuapp.com/Project/list_media.php?search=&limit=10&sort=title&order=ASC</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/list_media.php?search=&limit=10&sort=title&order=ASC">https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/list_media.php?search=&limit=10&sort=title&order=ASC</a> </td></tr>
 <tr><td> <em>Sub-Task 4: </em> Add any related PRs for this task</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Danda1R/rrd42-IT202-007/pull/59">https://github.com/Danda1R/rrd42-IT202-007/pull/59</a> </td></tr>
 </table></td></tr>
@@ -96,7 +96,7 @@
 <tr><td> <em>Sub-Task 2: </em> Explanation</td></tr>
 <tr><td> <em>Response:</em> <p>The release date, the list it belongs to, the image caption and whether<br>it is an episode and/or a series is included are the extra details<br>shown in this view.<div><br></div><div>Only admins are allowed to access the edit and delete<br>links on the page.</div><br></p><br></td></tr>
 <tr><td> <em>Sub-Task 3: </em> Add a direct link to this file on Heroku Prod</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-3cbbb1b8bda5.herokuapp.com/Project/single_media_view.php?id=20&search=&limit=10&sort=media_title&order=ASC">https://it202-rrd42-prod-3cbbb1b8bda5.herokuapp.com/Project/single_media_view.php?id=20&search=&limit=10&sort=media_title&order=ASC</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/single_media_view.php?id=20&search=&limit=10&sort=media_title&order=ASC">https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/single_media_view.php?id=20&search=&limit=10&sort=media_title&order=ASC</a> </td></tr>
 <tr><td> <em>Sub-Task 4: </em> Add any related PRs for this task</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Danda1R/rrd42-IT202-007/pull/61">https://github.com/Danda1R/rrd42-IT202-007/pull/61</a> </td></tr>
 </table></td></tr>
@@ -119,7 +119,7 @@
 </td></tr>
 </table></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Add a direct link to this file on Heroku Prod</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-3cbbb1b8bda5.herokuapp.com/Project/admin/edit_media.php?id=20&search=&limit=10&sort=title&order=ASC">https://it202-rrd42-prod-3cbbb1b8bda5.herokuapp.com/Project/admin/edit_media.php?id=20&search=&limit=10&sort=title&order=ASC</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/admin/edit_media.php?id=20&search=&limit=10&sort=title&order=ASC">https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/admin/edit_media.php?id=20&search=&limit=10&sort=title&order=ASC</a> </td></tr>
 <tr><td> <em>Sub-Task 3: </em> Add any related PRs for this task</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Danda1R/rrd42-IT202-007/pull/62">https://github.com/Danda1R/rrd42-IT202-007/pull/62</a> </td></tr>
 </table></td></tr>
