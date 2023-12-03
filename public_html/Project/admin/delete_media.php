@@ -48,7 +48,7 @@
     if (!$media_id) {
         // Redirect back to the list page with an error message
         flash("Invalid media ID", "warning");
-        die(header("Location: list_media.php"));
+        die(header("Location: ../list_media.php"));
     }
 
     $results = list_single_media($table, $_GET);
@@ -57,7 +57,7 @@
 
     if (count($results) == 0) {
         flash("This ID does not exist", "warning");
-        die(header("Location: list_media.php"));
+        die(header("Location: ../list_media.php"));
     }
 
     if (isset($_POST["submit"])) {
