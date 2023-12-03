@@ -35,7 +35,7 @@ if (isset($_POST["submit"])) {
 
     if (strtotime($_POST["year"]) === false) {
         flash("The year is invalid", "warning");
-        die(header("Location: $BASE_PATH" . "/admin/add_media.php"));
+        die(header("Location: $BASE_PATH" . "/admin/edit_media.php"));
     }
 
     if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_POST["release_date"])) {
