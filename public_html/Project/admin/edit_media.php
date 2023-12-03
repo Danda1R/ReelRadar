@@ -43,7 +43,7 @@ if (isset($_POST["submit"])) {
         die(header("Location: $BASE_PATH" . "/admin/edit_media.php"));
     }
 
-    $id = update_details_data("Media_Details", $_POST, $update_ignore, true, $media_id);
+    $id = update_details_data("Media_Details", $_POST, $update_ignore, false, $media_id);
     if ($id > 0) {
         flash("Edited Media Details with id $id", "success");
 
