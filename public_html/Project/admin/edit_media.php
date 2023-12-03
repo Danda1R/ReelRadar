@@ -22,6 +22,27 @@ if (isset($_POST["submit"])) {
     //echo "<pre>" . var_export($_POST, true) . "</pre>";
 
     //$detail_columns = remove_columns($_POST, $ignore);
+
+    if ($_POST["isSeries"] != '1' and $_POST["isSeries"] != '0') {
+        flash("isSeries can only be 0 or 1", "warning");
+        die(header("Location: $BASE_PATH" . "/admin/edit_media.php"));
+    }
+
+    if ($_POST["isEpisode"] != 1 and $_POST["isEpisode"] != 0) {
+        flash("isEpisode can only be 0 or 1", "warning");
+        die(header("Location: $BASE_PATH" . "/admin/edit_media.php"));
+    }
+
+    if (strtotime($_POST["year"]) === false) {
+        flash("The year is invalid", "warning");
+        die(header("Location: $BASE_PATH" . "/admin/edit_media.php"));
+    }
+
+    if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $_POST["release_date"])) {
+        flash("The date is invalid. It should be formatted as yyyy-mm-dd", "warning");
+        die(header("Location: $BASE_PATH" . "/admin/edit_media.php"));
+    }
+
     $id = update_details_data("Media_Details", $_POST, $update_ignore, true, $media_id);
     if ($id > 0) {
         flash("Edited Media Details with id $id", "success");
@@ -55,7 +76,7 @@ $table = se($table, null, null, false);
 if (!$media_id) {
     // Redirect back to the list page with an error message
     flash("Invalid media ID", "warning");
-    die(header("Location: list_media.php"));
+    die(header("Location: ../list_media.php"));
 }
 
 $results = list_single_media($table, $_GET);
@@ -64,7 +85,7 @@ $results = list_single_media($table, $_GET);
 
 if (count($results) == 0) {
     flash("This ID does not exist", "warning");
-    die(header("Location: list_media.php"));
+    die(header("Location: ../list_media.php"));
 }
 
 ?>
