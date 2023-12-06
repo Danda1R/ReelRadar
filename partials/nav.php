@@ -40,6 +40,7 @@ session_start();
             <li><a href="<?php echo get_url('home.php'); ?>">Home</a></li>
             <li><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
             <li><a href="<?php echo get_url('list_media.php?search=&limit=10&sort=title&order=ASC'); ?>">Media Page</a></li>
+            <li><a href="<?php echo get_url('list_associations.php'); ?>">Association Page</a></li>
         <?php endif; ?>
         <?php if (!is_logged_in()) : ?>
             <li><a href="<?php echo get_url('login.php'); ?>">Login</a></li>
