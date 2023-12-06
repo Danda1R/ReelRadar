@@ -160,3 +160,11 @@ footer {
   width: 300px; /* Set your desired width here */
   /* You can adjust the width value as needed */
 }
+
+.star-button i.fa-star.filled {
+  color: gold; /* Change the color to indicate filled */
+}
+
+.eye-button i.fa-eye.filled {
+  color: blue; /* Change the color to indicate filled */
+}

@@ -16,7 +16,9 @@ function search_media($table)
     Media_Details.year AS media_year,
     Media_Details.api_id,
     Media_Details.image_url AS media_image_url,
-    Media_Genre.name AS genre_name
+    Media_Genre.name AS genre_name,
+    COALESCE(Media_Classification.isFavorite, 0) AS isFavorite,
+    COALESCE(Media_Classification.isWatched, 0) AS isWatched
     FROM
     Media
     JOIN
@@ -26,7 +28,11 @@ function search_media($table)
     JOIN
     Media_Type ON Media.type_id = Media_Type.id
     JOIN
-    Media_Genre ON Media.genre_id = Media_Genre.id";
+    Media_Genre ON Media.genre_id = Media_Genre.id
+    LEFT JOIN
+    User_Media_Association ON Media.id = User_Media_Association.media_id
+    LEFT JOIN
+    Media_Classification ON User_Media_Association.class_id = Media_Classification.id";
 
     // Searching
     $search = isset($_GET['search']) ? $_GET['search'] : '';
