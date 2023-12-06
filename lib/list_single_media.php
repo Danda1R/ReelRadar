@@ -32,7 +32,6 @@ function list_single_media($table)
     MT.name AS type_name,
     COALESCE(MC.isFavorite, 0) AS isFavorite,
     COALESCE(MC.isWatched, 0) AS isWatched
-
 FROM
     Media M
 JOIN
@@ -44,12 +43,11 @@ JOIN
 JOIN
     Media_Genre MG ON M.genre_id = MG.id
 LEFT JOIN
-    User_Media_Association UMA ON M.id = UMA.media_id
+    User_Media_Association UMA ON M.id = UMA.media_id AND UMA.user_id = :user_id
 LEFT JOIN
     Media_Classification MC ON UMA.class_id = MC.id
 WHERE
-    M.id = :media_id
-    AND UMA.user_id = :user_id";
+    M.id = :media_id";
 
     $stmt = $db->prepare($query);
     $user_id = get_user_id();
@@ -77,15 +75,9 @@ function get_rating($media_id)
 
     $results = [];
 
-    $stmt = $db->prepare("SELECT mc.numOfStars AS rating
-    FROM
-    Media_Classification mc
-    JOIN
-    User_Media_Association uma ON mc.id = uma.class_id
-    WHERE
-    uma.media_id = :media_id
-    AND
-    uma.user_id = :user_id;");
+    $stmt = $db->prepare("SELECT mc.numOfStars AS rating FROM Media_Classification mc
+    LEFT JOIN User_Media_Association uma ON mc.id = uma.class_id AND uma.media_id = :media_id
+    AND uma.user_id = :user_id;");
 
     $user_id = get_user_id();
 

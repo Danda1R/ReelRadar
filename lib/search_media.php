@@ -94,7 +94,187 @@ function get_average_rating($media_id)
     $stmt->bindParam(':media_id', $media_id, PDO::PARAM_STR);
     $stmt->execute();
     $averageResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    error_log(var_export($averageResults, true));
+    //error_log(var_export($averageResults, true));
 
     return $averageResults[0]["averageStars"];
+}
+
+function search_associations()
+{
+    $db = getDB();
+
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
+
+    $limit = min(max($limit, 1), 100);
+
+    $query = "SELECT
+    M.id,
+    MD.original_title AS media_title,
+    MD.year AS release_year,
+    MD.api_id,
+    COALESCE(MC.isFavorite, 0) AS isFavorite,
+    COALESCE(MC.isWatched, 0) AS isWatched,
+    COALESCE(MC.numOfStars, 0) AS numOfStars
+    FROM
+    Media_Details MD
+    JOIN
+    Media M ON MD.id = M.details_id
+    LEFT JOIN
+    User_Media_Association UMA ON M.id = UMA.media_id
+    LEFT JOIN
+    Media_Classification MC ON UMA.class_id = MC.id
+    WHERE
+    UMA.user_id = :user_id";
+
+    // Searching
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+
+    if (!empty($search)) {
+        $searchTerm = "%$search%";
+        $query .= " AND (M.title LIKE :searchTerm OR MD.year LIKE :searchTerm) ";
+    }
+
+    // Sorting
+    $sortableColumns = ['title', 'year', 'numOfStars'];
+    $sort = isset($_GET['sort']) && in_array($_GET['sort'], $sortableColumns) ? $_GET['sort'] : 'media_title'; // Default sorting by title
+    $sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'DESC' : 'ASC'; // Default order ASC
+    $query .= " ORDER BY $sort $sortOrder";
+
+    // Limiting records
+    $query .= " LIMIT :limit";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    if (!empty($search)) {
+        $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
+    }
+
+    $user_id = get_user_id();
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+
+    $results = [];
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        flash("Failed to fetch data", "danger");
+        error_log(var_export($e, true));
+        return -1;
+    }
+    return $results;
+}
+
+function search_associations_count($limit)
+{
+    $db = getDB();
+
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
+
+    $limit = min(max($limit, 1), 100);
+
+    $query = "SELECT COUNT(*) AS row_count FROM (
+    SELECT
+    MD.original_title AS media_title,
+    MD.year AS release_year,
+    MD.api_id,
+    COALESCE(MC.isFavorite, 0) AS isFavorite,
+    COALESCE(MC.isWatched, 0) AS isWatched,
+    COALESCE(MC.numOfStars, 0) AS numOfStars
+    FROM
+    Media_Details MD
+    JOIN
+    Media M ON MD.id = M.details_id
+    LEFT JOIN
+    User_Media_Association UMA ON M.id = UMA.media_id
+    LEFT JOIN
+    Media_Classification MC ON UMA.class_id = MC.id
+    WHERE
+    UMA.user_id = :user_id";
+
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+
+    if (!empty($search)) {
+        $searchTerm = "%$search%";
+        $query .= " AND (M.title LIKE :searchTerm OR MD.year LIKE :searchTerm) ) AS subquery_alias";
+    } else {
+        $query .= ") AS subquery_alias";
+    }
+
+    // Limiting records
+    $query .= " LIMIT :limit";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    if (!empty($search)) {
+        $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
+    }
+
+    $user_id = get_user_id();
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+
+    //error_log(var_export($stmt, true));
+
+    $results = [];
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        flash("Failed to fetch data", "danger");
+        error_log(var_export($e, true));
+        return -1;
+    }
+    return $results;
+}
+
+function delete_all_associations()
+{
+    $db = getDB();
+
+    $query = "DELETE FROM User_Media_Association WHERE user_id = :user_id";
+
+    $query = "DELETE FROM Media_Classification WHERE id IN (SELECT class_id FROM User_Media_Association
+    WHERE user_id = :user_id)";
+
+    $stmt = $db->prepare($query);
+    $user_id = get_user_id();
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+
+    $results = [];
+
+    try {
+        $stmt->execute();
+    } catch (PDOException $e) {
+        flash("Failed to fetch data", "danger");
+        error_log(var_export($e, true));
+        return -1;
+    }
+    return $results;
+}
+
+function delete_an_association($media_id)
+{
+    $db = getDB();
+
+    $query = "DELETE FROM Media_Classification WHERE id = (SELECT class_id FROM User_Media_Association WHERE
+    user_id = :user_id AND media_id = :media_id)";
+
+    $stmt = $db->prepare($query);
+    $user_id = get_user_id();
+    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
+    $stmt->bindParam(':media_id', $media_id, PDO::PARAM_STR);
+
+    $results = [];
+
+    try {
+        $stmt->execute();
+    } catch (PDOException $e) {
+        flash("Failed to fetch data", "danger");
+        error_log(var_export($e, true));
+        return -1;
+    }
+    return $results;
 }

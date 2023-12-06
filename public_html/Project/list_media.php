@@ -115,9 +115,9 @@
                             $initialRating = get_average_rating($row['media_id']);
                             for ($i = 1; $i <= 5; $i++) {
                                 if ($i <= $initialRating) {
-                                    echo '<span class="star" data-user-id="' . get_user_id() . '" data-media-id="' . $row['media_id'] . '" data-value="' . $i . '" style="color: gold;">&#9733;</span>';
+                                    echo '<span data-user-id="' . get_user_id() . '" data-media-id="' . $row['media_id'] . '" data-value="' . $i . '" style="color: gold;">&#9733;</span>';
                                 } else {
-                                    echo '<span class="star" data-user-id="' . get_user_id() . '" data-media-id="' . $row['media_id'] . '" data-value="' . $i . '">&#9733;</span>';
+                                    echo '<span data-user-id="' . get_user_id() . '" data-media-id="' . $row['media_id'] . '" data-value="' . $i . '">&#9733;</span>';
                                 }
                             }
                             ?>
