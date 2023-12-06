@@ -39,7 +39,7 @@
     $search = isset($_GET['search']) ? $_GET['search'] : '';
 
     $results = list_single_media($table, $_GET);
-    //echo "<pre>" . var_export(count($results), true) . "</pre>";
+    error_log("Session data: " . var_export($results, true));
 
     if (count($results) == 0) {
         flash("This ID does not exist", "warning");
@@ -51,6 +51,31 @@
         <a href="list_media.php?search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button back-button">Back</a>
         <a href="admin/edit_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button edit-button">Edit</a>
         <a href="admin/delete_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button delete-button">Delete</a>
+    </div>
+    <div class="button-container-left">
+        <button class="button star-button <?php echo $results[0]['isFavorite'] == 1 ? 'filled' : ''; ?>" data-media-id="<?php echo $results[0]['media_id']; ?>" data-user-id="<?php echo get_user_id(); ?>" data-action="star">
+            <i class="fas fa-star <?php echo $results[0]['isFavorite'] == 1 ? 'filled' : ''; ?>"></i>
+        </button>
+        <button class="button eye-button <?php echo $results[0]['isWatched'] == 1 ? 'filled' : ''; ?>" data-media-id="<?php echo $results[0]['media_id']; ?>" data-user-id="<?php echo get_user_id(); ?>" data-action="eye">
+            <i class="fas fa-eye <?php echo $results[0]['isWatched'] == 1 ? 'filled' : ''; ?>"></i>
+        </button>
+    </div>
+    <div class="button-container-left">
+        Your Ratings:
+        <div class="rating">
+            <?php
+            $initialRating = get_rating($media_id); // Assuming $results is an array and contains the desired value
+            for ($i = 1; $i <= 5; $i++) {
+                if ($i <= $initialRating) {
+                    echo '<span class="star" data-user-id="' . get_user_id() . '" data-media-id="' . $results[0]['media_id'] . '" data-value="' . $i . '" style="color: gold;">&#9733;</span>';
+                } else {
+                    echo '<span class="star" data-user-id="' . get_user_id() . '" data-media-id="' . $results[0]['media_id'] . '" data-value="' . $i . '">&#9733;</span>';
+                }
+            }
+            ?>
+        </div>
+        <div class="selected-rating"></div>
+
     </div>
     <div class="card">
         <div class="media-details">

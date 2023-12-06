@@ -20,6 +20,21 @@
             width: auto;
             height: 300px;
         }
+
+        .icon {
+            position: absolute;
+            top: 10px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .star {
+            right: 10px;
+        }
+
+        .eye {
+            right: 40px;
+        }
     </style>
 </head>
 
@@ -85,11 +100,35 @@
                         <a href="admin/delete_media.php?id=<?php echo $row['media_id']; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button delete-button">Delete</a>
                         <a href="admin/edit_media.php?id=<?php echo $row['media_id']; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button edit-button">Edit</a>
                     </div>
-
+                    <div class="button-container">
+                        <button class="button star-button <?php echo $row['isFavorite'] == 1 ? 'filled' : ''; ?>" data-media-id="<?php echo $row['media_id']; ?>" data-user-id="<?php echo get_user_id(); ?>" data-action="star">
+                            <i class="fas fa-star <?php echo $row['isFavorite'] == 1 ? 'filled' : ''; ?>"></i>
+                        </button>
+                        <button class="button eye-button <?php echo $row['isWatched'] == 1 ? 'filled' : ''; ?>" data-media-id="<?php echo $row['media_id']; ?>" data-user-id="<?php echo get_user_id(); ?>" data-action="eye">
+                            <i class="fas fa-eye <?php echo $row['isWatched'] == 1 ? 'filled' : ''; ?>"></i>
+                        </button>
+                    </div>
+                    <div class="button-container">
+                        Average Ratings:
+                        <div class="rating">
+                            <?php
+                            $initialRating = get_average_rating($row['media_id']);
+                            for ($i = 1; $i <= 5; $i++) {
+                                if ($i <= $initialRating) {
+                                    echo '<span class="star" data-user-id="' . get_user_id() . '" data-media-id="' . $row['media_id'] . '" data-value="' . $i . '" style="color: gold;">&#9733;</span>';
+                                } else {
+                                    echo '<span class="star" data-user-id="' . get_user_id() . '" data-media-id="' . $row['media_id'] . '" data-value="' . $i . '">&#9733;</span>';
+                                }
+                            }
+                            ?>
+                        </div>
+                    </div>
                 </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
+
     </div>
+<?php endforeach; ?>
+<?php endif; ?>
+</div>
 </body>
 
 <?php
