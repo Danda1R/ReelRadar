@@ -30,6 +30,8 @@
     is_logged_in(true);
     require(__DIR__ . "/../../partials/flash.php");
 
+    $previousPage = $_SERVER['HTTP_REFERER'];
+
     $table = "Media";
     $media_id = isset($_GET['id']) ? $_GET['id'] : null;
     $sortableColumns = ['title', 'year', 'genre_name'];
@@ -48,7 +50,7 @@
 
     ?>
     <div class="button-container-left">
-        <a href="list_associations.php?search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button back-button">Back</a>
+        <a href="<?php echo $previousPage; ?>" class="button back-button">Back</a>
         <a href="admin/delete_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button delete-button">Delete</a>
     </div>
     <div class="button-container-left">
