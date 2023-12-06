@@ -1,4 +1,20 @@
 $(document).ready(function () {
+  $('.star').click(function () {
+    var value = $(this).data('value');
+
+    // Perform further actions (e.g., send rating value to server via AJAX)
+
+    // Reset all stars' color
+    $('.star').css('color', 'black');
+
+    // Highlight stars up to the clicked one
+    $(this).prevAll('.star').css('color', 'gold');
+    $(this).css('color', 'gold');
+
+    var mediaId = $(this).data('media-id');
+    var userId = $(this).data('user-id');
+    changeRatings(value, mediaId, userId);
+  });
   $('.star-button').on('click', function () {
     var isFilled = $(this).find('i').hasClass('filled');
 
@@ -122,6 +138,27 @@ $(document).ready(function () {
         media_id: mediaId,
         user_id: userId,
         action: 'remove_from_star'
+      },
+      success: function (response) {
+        console.log('Removed from star successfully.');
+        // Handle success response (if needed)
+      },
+      error: function (xhr, status, error) {
+        console.error('Error adding to star:', error);
+        // Handle error (if needed)
+      }
+    });
+  }
+
+  function changeRatings(starValue, mediaId, userId) {
+    $.ajax({
+      type: 'POST',
+      url: '/Project/change_classification.php', // PHP file handling the star action
+      data: {
+        star_value: starValue,
+        media_id: mediaId,
+        user_id: userId,
+        action: 'change_rating'
       },
       success: function (response) {
         console.log('Removed from star successfully.');

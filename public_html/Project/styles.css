@@ -22,7 +22,7 @@ nav li a {
 }
 
 body {
-  background-color: rgb(248, 227, 180);
+  background-color: rgb(180, 248, 188);
   color: rgb(0, 0, 0);
 }
 
@@ -167,4 +167,19 @@ footer {
 
 .eye-button i.fa-eye.filled {
   color: blue; /* Change the color to indicate filled */
+}
+
+.rating {
+  display: flex;
+}
+
+.star {
+  display: inline-block;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.selected-rating {
+  margin-top: 10px;
+  font-size: 18px;
 }
