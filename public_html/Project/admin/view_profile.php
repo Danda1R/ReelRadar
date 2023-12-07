@@ -1,11 +1,14 @@
 <?php
-require_once(__DIR__ . "/../../partials/nav.php");
+require_once(__DIR__ . "/../../../partials/nav.php");
 is_logged_in(true);
 ?>
 
 <?php
 
-$results = search_associations($_GET);
+$user_id = $_GET['user_id'];
+$username = $_GET['username'];
+
+$results = search_associations_by_user($user_id, $_GET);
 
 
 $sortableColumns = ['title', 'year', 'numOfStars'];
@@ -14,7 +17,7 @@ $sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'D
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$count_results = search_associations_count($limit, $_GET);
+$count_results = search_associations_count_by_user($limit, $user_id, $_GET);
 $count = $count_results[0]["row_count"];
 
 $numOfPage = $count > $limit ? $limit : $count;
@@ -47,12 +50,8 @@ if (isset($_POST["submit"])) {
     </select>
     <button type="submit">Apply</button>
 </form>
-<?php if (has_role("Admin")) : ?>
-    <form method="POST">
-        <input class="btn btn-primary" type="submit" value="Delete All Associations" name="submit" />
-    </form>
-<?php endif; ?>
-<h3>View Your Associations</h3>
+<a href="list_all_associations.php?search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button back-button">Back</a>
+<h3>View <?php echo $username ?>'s Associations</h3>
 <h5>Total number of associations with this account: <?php echo $count ?></h5>
 <h5>Total number of associations on this page: <?php echo $numOfPage ?></h5>
 
@@ -86,7 +85,7 @@ if (isset($_POST["submit"])) {
                         <td>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <a href="single_association_view.php?id=<?php echo $record['id']; ?>" class="btn btn-primary btn-sm">View</a>
+                                    <a href="../single_association_view.php?id=<?php echo $record['id']; ?>" class="btn btn-primary btn-sm">View</a>
                                 </div>
                                 <?php if (has_role("Admin")) : ?>
                                     <div class="col-md-6">
