@@ -5,7 +5,7 @@ is_logged_in(true, "../login.php");
 
 <?php
 
-$results = search_all_associations($_GET);
+$results = search_all_non_associations($_GET);
 
 
 $sortableColumns = ['title', 'year', 'numOfStars'];
@@ -15,7 +15,7 @@ $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $searchType = isset($_GET['searchType']) ? $_GET['searchType'] : '';
 
-$count_results = search_all_associations_count($limit, $_GET);
+$count_results = search_all_non_associations_count($limit, $_GET);
 $count = $count_results[0]["row_count"];
 
 $numOfPage = $count > $limit ? $limit : $count;
@@ -37,9 +37,8 @@ if (isset($_POST["submit"])) {
     <select id="search" name="searchType">
         <option value="title" <?php echo $searchType === 'title' ? 'selected' : ''; ?>>Title</option>
         <option value="year" <?php echo $searchType === 'year' ? 'selected' : ''; ?>>Year</option>
-        <option value="username" <?php echo $searchType === 'username' ? 'selected' : ''; ?>>Username</option>
     </select>
-    <input type="text" name="search" class="search-bar" placeholder="Search by title, year, or username" value="<?php echo htmlspecialchars($search); ?>">
+    <input type="text" name="search" class="search-bar" placeholder="Search by title or year" value="<?php echo htmlspecialchars($search); ?>">
     <label for="limit">Limit:</label>
     <input type="number" id="limit" name="limit" min="1" max="100" value="<?php echo htmlspecialchars($limit); ?>">
     <label for="sort">Sort by:</label>
@@ -54,12 +53,7 @@ if (isset($_POST["submit"])) {
     </select>
     <button type="submit">Apply</button>
 </form>
-<?php if (has_role("Admin")) : ?>
-    <form method="POST">
-        <input class="btn btn-primary" type="submit" value="Delete All Associations Searched" name="submit" />
-    </form>
-<?php endif; ?>
-<h3>View All Associations</h3>
+<h3>View All Non-Associations</h3>
 <h5>Total number of associations with this account: <?php echo $count ?></h5>
 <h5>Total number of associations on this page: <?php echo $numOfPage ?></h5>
 
@@ -101,14 +95,6 @@ if (isset($_POST["submit"])) {
                                 <div class="col-md-6">
                                     <a href="../single_association_view.php?id=<?php echo $record['id']; ?>" class="btn btn-primary btn-sm">View</a>
                                 </div>
-                                <?php if (has_role("Admin")) : ?>
-                                    <div class="col-md-6">
-                                        <form method="POST">
-                                            <input type="hidden" name="class_id" value=<?php echo $record['class_id']; ?> />
-                                            <input class="btn btn-primary btn-sm" type="submit" value="Delete" name="submit" />
-                                        </form>
-                                    </div>
-                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>

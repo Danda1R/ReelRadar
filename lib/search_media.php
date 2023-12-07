@@ -414,6 +414,64 @@ LEFT JOIN
     return $results;
 }
 
+function search_all_non_associations()
+{
+    $db = getDB();
+
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
+
+    $limit = min(max($limit, 1), 100);
+
+    $query = "SELECT
+    M.id,
+    MD.original_title AS media_title,
+    MD.year AS release_year,
+    MD.api_id
+    FROM Media M
+    LEFT JOIN Media_Details MD ON M.details_id = MD.id
+    LEFT JOIN User_Media_Association UMA ON M.id = UMA.media_id
+    WHERE UMA.id IS NULL";
+
+    // Searching
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+    $searchArray = ['title' => 'M.title', 'year' => 'MD.year', 'username' => 'U.username'];
+    if (isset($_GET['searchType'])) {
+        if (!empty($search)) {
+            $searchTerm = "%$search%";
+            $query .= " AND " . $searchArray[$_GET['searchType']] . " LIKE :searchTerm";
+        }
+    }
+
+    // Sorting
+    $sortableColumns = ['title', 'year', 'numOfStars'];
+    $sort = isset($_GET['sort']) && in_array($_GET['sort'], $sortableColumns) ? $_GET['sort'] : 'media_title'; // Default sorting by title
+    $sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'DESC' : 'ASC'; // Default order ASC
+    $query .= " ORDER BY $sort $sortOrder";
+
+    // Limiting records
+    $query .= " LIMIT :limit";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    if (!empty($search)) {
+        $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
+    }
+
+    $results = [];
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        //error_log(var_export($results, true));
+    } catch (PDOException $e) {
+        flash("Failed to fetch data", "danger");
+        error_log(var_export($e, true));
+        return -1;
+    }
+    return $results;
+}
+
 function search_all_associations_count($limit)
 {
     $db = getDB();
@@ -443,6 +501,60 @@ LEFT JOIN
     Media_Details MD ON M.details_id = MD.id
 LEFT JOIN
     Media_Classification MC ON UMA.class_id = MC.id";
+
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+    $searchArray = ['title' => 'M.title', 'year' => 'MD.year', 'username' => 'U.username'];
+    if (isset($_GET['searchType'])) {
+        if (!empty($search)) {
+            $searchTerm = "%$search%";
+            $query .= " WHERE " . $searchArray[$_GET['searchType']] . " LIKE :searchTerm ) AS subquery_alias";
+        } else {
+            $query .= ") AS subquery_alias";
+        }
+    } else {
+        $query .= ") AS subquery_alias";
+    }
+
+    $query .= " LIMIT :limit";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+
+    if (!empty($search)) {
+        $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
+    }
+
+    $results = [];
+
+    try {
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        flash("Failed to fetch data", "danger");
+        error_log(var_export($e, true));
+        return -1;
+    }
+    return $results;
+}
+
+function search_all_non_associations_count($limit)
+{
+    $db = getDB();
+
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
+
+    $limit = min(max($limit, 1), 100);
+
+    $query = "SELECT COUNT(*) AS row_count FROM (
+    SELECT
+    M.id,
+    MD.original_title AS media_title,
+    MD.year AS release_year,
+    MD.api_id
+    FROM Media M
+    LEFT JOIN Media_Details MD ON M.details_id = MD.id
+    LEFT JOIN User_Media_Association UMA ON M.id = UMA.media_id
+    WHERE UMA.id IS NULL";
 
     $search = isset($_GET['search']) ? $_GET['search'] : '';
     $searchArray = ['title' => 'M.title', 'year' => 'MD.year', 'username' => 'U.username'];
