@@ -67,6 +67,7 @@ session_start();
                 <ul class="dropdown-menu">
                     <li><a href="<?php echo get_url('admin/list_all_associations.php'); ?>">List All Associations</a></li>
                     <li><a href="<?php echo get_url('admin/list_all_non_associations.php'); ?>">List All Non-Associations</a></li>
+                    <li><a href="<?php echo get_url('admin/add_associations.php'); ?>">Add Associations</a></li>
                 </ul>
             </li>
         <?php endif; ?>
