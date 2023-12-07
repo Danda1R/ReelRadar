@@ -52,3 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die(header("Location: add_associations.php"));
     }
 }
+
+require(__DIR__ . "/../../../partials/flash.php");
+require_once(__DIR__ . "/../../../partials/footer.php");

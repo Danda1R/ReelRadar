@@ -54,8 +54,8 @@ if (isset($_POST["submit"])) {
     <button type="submit">Apply</button>
 </form>
 <h3>View All Non-Associations</h3>
-<h5>Total number of associations with this account: <?php echo $count ?></h5>
-<h5>Total number of associations on this page: <?php echo $numOfPage ?></h5>
+<h5>Total number of media without associations: <?php echo $count ?></h5>
+<h5>Total number of media on this page: <?php echo $numOfPage ?></h5>
 
 <?php if (count($results) == 0) : ?>
     <p>No results to show</p>

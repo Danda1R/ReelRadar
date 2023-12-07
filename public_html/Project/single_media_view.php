@@ -64,7 +64,8 @@
         Your Ratings:
         <div class="rating">
             <?php
-            $initialRating = get_rating($media_id); // Assuming $results is an array and contains the desired value
+            $initialRating = get_rating($media_id);
+            error_log("Session data: " . var_export($initialRating, true));
             for ($i = 1; $i <= 5; $i++) {
                 if ($i <= $initialRating) {
                     echo '<span class="star" data-user-id="' . get_user_id() . '" data-media-id="' . $results[0]['media_id'] . '" data-value="' . $i . '" style="color: gold;">&#9733;</span>';

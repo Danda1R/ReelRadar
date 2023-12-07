@@ -76,7 +76,7 @@ function get_rating($media_id)
     $results = [];
 
     $stmt = $db->prepare("SELECT mc.numOfStars AS rating FROM Media_Classification mc
-    LEFT JOIN User_Media_Association uma ON mc.id = uma.class_id AND uma.media_id = :media_id
+    JOIN User_Media_Association uma ON mc.id = uma.class_id AND uma.media_id = :media_id
     AND uma.user_id = :user_id;");
 
     $user_id = get_user_id();
@@ -85,7 +85,12 @@ function get_rating($media_id)
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $stmt->execute();
     $averageResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    error_log(var_export($stmt, true));
     error_log(var_export($averageResults, true));
 
-    return $averageResults[0]["rating"];
+    if (empty($averageResults)) {
+        return 0;
+    } else {
+        return $averageResults[0]["rating"];
+    }
 }
