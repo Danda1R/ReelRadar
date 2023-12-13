@@ -13,16 +13,18 @@
 .alert-info {
   background-color: teal;
 }
+
 nav li {
   display: inline;
   background-color: rgb(245, 208, 129);
 }
+
 nav li a {
   color: rgb(53, 10, 31);
 }
 
 body {
-  background-color: rgb(248, 227, 180);
+  background-color: rgb(180, 248, 188);
   color: rgb(0, 0, 0);
 }
 
@@ -43,7 +45,7 @@ section {
 }
 
 footer {
-  height: 50px; /* Height of the footer */
+  height: 50px;
   background-color: #333;
   color: #fff;
   text-align: center;
@@ -77,25 +79,21 @@ footer {
   margin: auto;
 }
 
-/* Hide dropdown menu by default */
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: 100%; /* Position dropdown below the parent */
+  top: 100%;
   left: 0;
   z-index: 1;
-  /* Additional styling for appearance */
   background-color: #fff;
   padding: 8px;
   border: 1px solid #ccc;
 }
 
-/* Show dropdown menu on hover */
 .dropdown:hover .dropdown-menu {
   display: block;
 }
 
-/* Additional styling for dropdown links */
 .dropdown-menu li {
   display: block;
   margin: 5px 0;
@@ -104,22 +102,19 @@ footer {
 .dropdown-menu li a {
   text-decoration: none;
   color: #333;
-  /* Additional styles as needed */
 }
 
-/* Styles for the button container */
 .button-container {
-  text-align: center; /* Center align the buttons */
-  margin-top: 20px; /* Add space from the top */
+  text-align: center;
+  margin-top: 5px;
 }
 
 .button-container-left {
-  text-align: left; /* Center align the buttons */
-  margin-top: 20px; /* Add space from the top */
+  text-align: left;
+  margin-top: 20px;
   margin-left: 20px;
 }
 
-/* Styles for the buttons */
 .button {
   display: inline-block;
   padding: 10px 20px;
@@ -133,30 +128,250 @@ footer {
 }
 
 .back-button {
-  background-color: #ffffff; /* Red color */
+  background-color: #ffffff;
   border-color: #ffffff;
   color: #000000;
 }
 
-/* Delete button style */
 .delete-button {
-  background-color: #d9534f; /* Red color */
+  background-color: #d9534f;
   border-color: #d9534f;
 }
 
-/* Edit button style */
 .edit-button {
-  background-color: #5bc0de; /* Blue color */
+  background-color: #5bc0de;
   border-color: #5bc0de;
 }
 
-/* Hover effect for buttons */
 .button:hover {
   background-color: #555;
   color: #fff;
 }
 
 .search-bar {
-  width: 300px; /* Set your desired width here */
-  /* You can adjust the width value as needed */
+  width: 300px;
+}
+
+.star-button,
+.eye-button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  margin-left: 10px;
+}
+
+.star-button.filled {
+  background-color: #eb9744;
+}
+
+.eye-button.filled {
+  background-color: #5bc0de;
+}
+
+.star-button i.fa-star.filled {
+  color: gold;
+}
+
+.eye-button i.fa-eye.filled {
+  color: blue;
+}
+
+.rating {
+  display: flex;
+}
+
+.star {
+  display: inline-block;
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.selected-rating {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+table {
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.results-container {
+  display: flex;
+}
+
+.results-container table {
+  width: 50%;
+}
+
+.results-container table:nth-child(2n) {
+  margin-left: 20px;
+}
+
+.checkbox-column {
+  width: 50px;
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+}
+
+.form-group {
+  margin-right: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input[type='checkbox'],
+.form-group input[type='number'],
+.form-group input[type='number'],
+.form-submit input[type='submit'] {
+  margin-right: 10px;
+  padding-right: 10px;
+}
+
+.form-group input[type='number'] {
+  width: 40px;
+}
+
+.form-submit {
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+.form-submit input[type='submit'] {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-submit input[type='submit']:hover {
+  background-color: #0056b3;
+}
+
+.card-details {
+  display: flex;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 90%;
+  height: 100%;
+  max-height: 600px;
+  margin: 15px auto;
+}
+
+.media-details {
+  display: flex;
+  flex-direction: column;
+  margin: 1%;
+}
+
+.media-title {
+  width: 50%;
+}
+
+.media-type-details {
+  width: 50%;
+}
+
+.media-api-details {
+  width: 60%;
+}
+
+.media-details h2 {
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+}
+
+.media-details h2 .year {
+  margin-left: 10px;
+  font-family: Arial, sans-serif;
+  color: #4d4d4d97;
+  font-size: 18px;
+}
+
+.media-details p {
+  margin-bottom: 8px;
+}
+
+.media-type-details p,
+.media-api-details p {
+  font-family: Arial, sans-serif;
+  color: #14141497;
+  font-size: 28px;
+}
+
+.media-details img {
+  width: 70%;
+  display: block;
+  border: 2px solid #333;
+  border-radius: 8px;
+  margin: auto;
+}
+
+.media-details p.caption {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  width: 400px;
+  height: 45%;
+  min-height: 500px;
+  max-height: 600px;
+  display: inline-block;
+  float: left;
+}
+
+.card-mini-details {
+  display: flex;
+  background-color: #fff;
+  margin: 15px auto;
+}
+
+.card-mini-column {
+  width: 50%;
+}
+
+.card-mini-column img {
+  height: 200px;
+}
+
+.icon {
+  position: absolute;
+  top: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.star {
+  right: 10px;
+}
+
+.eye {
+  right: 40px;
 }

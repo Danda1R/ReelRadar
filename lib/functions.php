@@ -43,3 +43,7 @@ require(__DIR__ . "/list_single_media.php");
 require(__DIR__ . "/update_data.php");
 
 require(__DIR__ . "/get_id.php");
+
+require(__DIR__ . "/change_class.php");
+
+require(__DIR__ . "/search_user_media.php");
