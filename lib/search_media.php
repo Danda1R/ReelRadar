@@ -92,6 +92,70 @@ function search_media($table)
     ];
 }
 
+function search_top_media()
+{
+    $db = getDB();
+    $watchedresults = [];
+    $favoriteresults = [];
+
+    $query = "SELECT m.id AS media_id,
+    m.title AS media_title,
+    md.year AS media_year,
+    md.api_id,
+    md.image_url AS media_image_url,
+    mc.isFavorite AS isFavorite,
+    mc.isWatched AS isWatched
+    FROM Media m
+    JOIN User_Media_Association uma ON m.id = uma.media_id
+    JOIN Media_Classification mc ON uma.class_id = mc.id
+    JOIN Media_Details md ON m.details_id = md.id
+    WHERE mc.isWatched = 1
+    ORDER BY mc.modified DESC
+    LIMIT 4;";
+
+    $stmt = $db->prepare($query);
+
+    try {
+        $stmt->execute();
+        $watchedresults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        flash("Failed to fetch data", "danger");
+        error_log(var_export($e, true));
+        return -1;
+    }
+
+    $query = "SELECT m.id AS media_id,
+    m.title AS media_title,
+    md.year AS media_year,
+    md.api_id,
+    md.image_url AS media_image_url,
+    mc.isFavorite AS isFavorite,
+    mc.isWatched AS isWatched
+    FROM Media m
+    JOIN User_Media_Association uma ON m.id = uma.media_id
+    JOIN Media_Classification mc ON uma.class_id = mc.id
+    JOIN Media_Details md ON m.details_id = md.id
+    WHERE mc.isFavorite = 1
+    ORDER BY mc.modified DESC
+    LIMIT 4;";
+
+    $stmt = $db->prepare($query);
+
+    try {
+        $stmt->execute();
+        $favoriteresults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        flash("Failed to fetch data", "danger");
+        error_log(var_export($e, true));
+        return -1;
+    }
+
+    return [
+        "watchedresults" => $watchedresults,
+        "favoriteresults" => $favoriteresults,
+    ];
+}
+
 function get_average_rating($media_id)
 {
 
@@ -726,6 +790,7 @@ function search_associations_by_user($user_id)
     MD.original_title AS media_title,
     MD.year AS release_year,
     MD.api_id,
+    MD.image_url,
     COALESCE(MC.isFavorite, 0) AS isFavorite,
     COALESCE(MC.isWatched, 0) AS isWatched,
     COALESCE(MC.numOfStars, 0) AS numOfStars

@@ -13,10 +13,12 @@
 .alert-info {
   background-color: teal;
 }
+
 nav li {
   display: inline;
   background-color: rgb(245, 208, 129);
 }
+
 nav li a {
   color: rgb(53, 10, 31);
 }
@@ -43,7 +45,7 @@ section {
 }
 
 footer {
-  height: 50px; /* Height of the footer */
+  height: 50px;
   background-color: #333;
   color: #fff;
   text-align: center;
@@ -77,25 +79,21 @@ footer {
   margin: auto;
 }
 
-/* Hide dropdown menu by default */
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: 100%; /* Position dropdown below the parent */
+  top: 100%;
   left: 0;
   z-index: 1;
-  /* Additional styling for appearance */
   background-color: #fff;
   padding: 8px;
   border: 1px solid #ccc;
 }
 
-/* Show dropdown menu on hover */
 .dropdown:hover .dropdown-menu {
   display: block;
 }
 
-/* Additional styling for dropdown links */
 .dropdown-menu li {
   display: block;
   margin: 5px 0;
@@ -104,22 +102,19 @@ footer {
 .dropdown-menu li a {
   text-decoration: none;
   color: #333;
-  /* Additional styles as needed */
 }
 
-/* Styles for the button container */
 .button-container {
-  text-align: center; /* Center align the buttons */
-  margin-top: 5px; /* Add space from the top */
+  text-align: center;
+  margin-top: 5px;
 }
 
 .button-container-left {
-  text-align: left; /* Center align the buttons */
-  margin-top: 20px; /* Add space from the top */
+  text-align: left;
+  margin-top: 20px;
   margin-left: 20px;
 }
 
-/* Styles for the buttons */
 .button {
   display: inline-block;
   padding: 10px 20px;
@@ -133,32 +128,28 @@ footer {
 }
 
 .back-button {
-  background-color: #ffffff; /* Red color */
+  background-color: #ffffff;
   border-color: #ffffff;
   color: #000000;
 }
 
-/* Delete button style */
 .delete-button {
-  background-color: #d9534f; /* Red color */
+  background-color: #d9534f;
   border-color: #d9534f;
 }
 
-/* Edit button style */
 .edit-button {
-  background-color: #5bc0de; /* Blue color */
+  background-color: #5bc0de;
   border-color: #5bc0de;
 }
 
-/* Hover effect for buttons */
 .button:hover {
   background-color: #555;
   color: #fff;
 }
 
 .search-bar {
-  width: 300px; /* Set your desired width here */
-  /* You can adjust the width value as needed */
+  width: 300px;
 }
 
 .star-button,
@@ -178,11 +169,11 @@ footer {
 }
 
 .star-button i.fa-star.filled {
-  color: gold; /* Change the color to indicate filled */
+  color: gold;
 }
 
 .eye-button i.fa-eye.filled {
-  color: blue; /* Change the color to indicate filled */
+  color: blue;
 }
 
 .rating {
@@ -251,7 +242,7 @@ th {
 .form-group input[type='number'],
 .form-submit input[type='submit'] {
   margin-right: 10px;
-  padding-right: 10px; /* Added padding */
+  padding-right: 10px;
 }
 
 .form-group input[type='number'] {
@@ -260,7 +251,7 @@ th {
 
 .form-submit {
   margin-top: 10px;
-  padding-bottom: 10px; /* Added padding */
+  padding-bottom: 10px;
 }
 
 .form-submit input[type='submit'] {
@@ -312,10 +303,10 @@ th {
 }
 
 .media-details h2 .year {
-  margin-left: 10px; /* Adjust the spacing between title and year */
-  font-family: Arial, sans-serif; /* Change the font family */
-  color: #4d4d4d97; /* Change the color */
-  font-size: 18px; /* Change the font size */
+  margin-left: 10px;
+  font-family: Arial, sans-serif;
+  color: #4d4d4d97;
+  font-size: 18px;
 }
 
 .media-details p {
