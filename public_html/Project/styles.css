@@ -110,7 +110,7 @@ footer {
 /* Styles for the button container */
 .button-container {
   text-align: center; /* Center align the buttons */
-  margin-top: 20px; /* Add space from the top */
+  margin-top: 5px; /* Add space from the top */
 }
 
 .button-container-left {
@@ -164,9 +164,9 @@ footer {
 .star-button,
 .eye-button {
   margin-top: 10px;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  margin-left: 20px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  margin-left: 10px;
 }
 
 .star-button.filled {
@@ -247,6 +247,7 @@ th {
 }
 
 .form-group input[type='checkbox'],
+.form-group input[type='number'],
 .form-group input[type='number'],
 .form-submit input[type='submit'] {
   margin-right: 10px;
@@ -348,7 +349,9 @@ th {
   padding: 10px;
   margin: 10px;
   width: 400px;
-  height: 500px;
+  height: 45%;
+  min-height: 500px;
+  max-height: 600px;
   display: inline-block;
   float: left;
 }

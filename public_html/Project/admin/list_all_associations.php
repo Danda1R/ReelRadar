@@ -7,18 +7,21 @@ is_logged_in(true, "../login.php");
 
 $results = search_all_associations($_GET);
 
-
 $sortableColumns = ['title', 'year', 'numOfStars'];
 $sort = isset($_GET['sort']) && in_array($_GET['sort'], $sortableColumns) ? $_GET['sort'] : 'media_title'; // Default sorting by title
 $sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'DESC' : 'ASC'; // Default order ASC
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $searchType = isset($_GET['searchType']) ? $_GET['searchType'] : '';
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 
 $count_results = search_all_associations_count($limit, $_GET);
-$count = $count_results[0]["row_count"];
 
-$numOfPage = $count > $limit ? $limit : $count;
+//echo "<pre>" . var_export($results, true) . "</pre>";
+
+$count = $count_results["totalRows"];
+$totalPages = ceil($count / $limit);
+$numOfPage = $count_results["results"][0]["row_count"];
 
 if (isset($_POST["submit"])) {
     if ($_POST["submit"] == "Delete All Associations Searched") {
@@ -52,6 +55,12 @@ if (isset($_POST["submit"])) {
         <option value="ASC" <?php echo $sortOrder === 'ASC' ? 'selected' : ''; ?>>Ascending</option>
         <option value="DESC" <?php echo $sortOrder === 'DESC' ? 'selected' : ''; ?>>Descending</option>
     </select>
+    <div class="page-navigation">
+        <label for="page">Page:</label>
+        <div class="page-arrows">
+            <input type="number" id="page" name="page" min="1" max=<?php echo $totalPages ?> value="<?php echo htmlspecialchars($page); ?>" style="width: 50px;">
+        </div>
+    </div>
     <button type="submit">Apply</button>
 </form>
 <?php if (has_role("Admin")) : ?>

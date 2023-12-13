@@ -10,6 +10,7 @@ $sort = isset($_GET['sort']) && in_array($_GET['sort'], $sortableColumns) ? $_GE
 $sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'DESC' : 'ASC'; // Default order ASC
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 
 $results = list_single_media($table, $_GET);
 error_log("Session data: " . var_export($results, true));
@@ -21,9 +22,9 @@ if (count($results) == 0) {
 
 ?>
 <div class="button-container-left">
-    <a href="list_media.php?search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button back-button">Back</a>
-    <a href="admin/edit_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button edit-button">Edit</a>
-    <a href="admin/delete_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button delete-button">Delete</a>
+    <a href="list_media.php?search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>&page=<?php echo $page; ?>" class="button back-button">Back</a>
+    <a href="admin/edit_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>&page=<?php echo $page; ?>" class="button edit-button">Edit</a>
+    <a href="admin/delete_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>&page=<?php echo $page; ?>" class="button delete-button">Delete</a>
 </div>
 <div class="card-details">
     <div class="media-details media-title">
@@ -76,7 +77,8 @@ if (count($results) == 0) {
         <br>
         <?php echo ($results[0]['api_id'] !== null) ? "<p>This media was created by the API. The API ID is " . htmlspecialchars($results[0]['api_id']) .
             "</p><br><p>It was created on " . htmlspecialchars($results[0]['created']) . " and last modified on " . htmlspecialchars($results[0]['modified']) .
-            " </p>" : "<p>Created manually</p>";
+            " </p>" : "<p>Created manually</p><br><p>It was created on " . htmlspecialchars($results[0]['created']) . " and last modified on " . htmlspecialchars($results[0]['modified']) .
+            " </p>";
         ?>
     </div>
 </div>

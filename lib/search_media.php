@@ -5,10 +5,29 @@ function search_media($table)
     $table = se($table, null, null, false);
     $db = getDB();
 
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
     $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
-
     $limit = min(max($limit, 1), 100);
+    $offset = ($page - 1) * $limit;
+
+    // Query to get total count and retrieve paginated results
+    $countQuery = "SELECT COUNT(*) AS total FROM Media"; // Replace 'Media' with your actual table name and JOINs if necessary
+
+    // Adjust the count query based on your search criteria, if any
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+    if (!empty($search)) {
+        $searchTerm = "%$search%";
+        $countQuery .= " WHERE Media.title LIKE :searchTerm OR Media_Details.year LIKE :searchTerm OR Media_Genre.name LIKE :searchTerm";
+    }
+
+    // Prepare and execute the count query
+    $countStmt = $db->prepare($countQuery);
+    if (!empty($search)) {
+        $countStmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
+    }
+    $countStmt->execute();
+    $totalRows = $countStmt->fetchColumn();
 
     $query = "SELECT
     Media.id AS media_id,
@@ -19,35 +38,21 @@ function search_media($table)
     Media_Genre.name AS genre_name,
     COALESCE(Media_Classification.isFavorite, 0) AS isFavorite,
     COALESCE(Media_Classification.isWatched, 0) AS isWatched
-FROM
-    Media
-JOIN
-    Media_Details ON Media.details_id = Media_Details.id
-JOIN
-    Media_List ON Media.list_id = Media_List.id
-JOIN
-    Media_Type ON Media.type_id = Media_Type.id
-JOIN
-    Media_Genre ON Media.genre_id = Media_Genre.id
-LEFT JOIN (
-    SELECT
-        MAX(uma.class_id) AS class_id,
-        uma.media_id
-    FROM
-        User_Media_Association uma
-    WHERE
-        uma.user_id = :user_id
-    GROUP BY
-        uma.media_id
-) AS UserMedia ON Media.id = UserMedia.media_id
-LEFT JOIN
-    Media_Classification ON UserMedia.class_id = Media_Classification.id";
+    FROM Media
+    JOIN Media_Details ON Media.details_id = Media_Details.id
+    JOIN Media_List ON Media.list_id = Media_List.id
+    JOIN Media_Type ON Media.type_id = Media_Type.id
+    JOIN Media_Genre ON Media.genre_id = Media_Genre.id
+    LEFT JOIN (
+        SELECT MAX(uma.class_id) AS class_id, uma.media_id
+        FROM User_Media_Association uma
+        WHERE uma.user_id = :user_id
+        GROUP BY uma.media_id
+    ) AS UserMedia ON Media.id = UserMedia.media_id
+    LEFT JOIN Media_Classification ON UserMedia.class_id = Media_Classification.id";
 
     // Searching
-    $search = isset($_GET['search']) ? $_GET['search'] : '';
-
     if (!empty($search)) {
-        $searchTerm = "%$search%";
         $query .= " WHERE Media.title LIKE :searchTerm OR Media_Details.year LIKE :searchTerm OR Media_Genre.name LIKE :searchTerm";
     }
 
@@ -58,9 +63,10 @@ LEFT JOIN
     $query .= " ORDER BY $sort $sortOrder";
 
     // Limiting records
-    $query .= " LIMIT :limit";
+    $query .= " LIMIT :limit OFFSET :offset";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 
     if (!empty($search)) {
         $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
@@ -79,7 +85,11 @@ LEFT JOIN
         error_log(var_export($e, true));
         return -1;
     }
-    return $results;
+
+    return [
+        'results' => $results,
+        'totalRows' => $totalRows,
+    ];
 }
 
 function get_average_rating($media_id)
@@ -103,10 +113,11 @@ function search_associations()
 {
     $db = getDB();
 
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
     $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
-
     $limit = min(max($limit, 1), 100);
+    $offset = ($page - 1) * $limit;
 
     $query = "SELECT
     M.id,
@@ -142,9 +153,10 @@ function search_associations()
     $query .= " ORDER BY $sort $sortOrder";
 
     // Limiting records
-    $query .= " LIMIT :limit";
+    $query .= " LIMIT :limit OFFSET :offset";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 
     if (!empty($search)) {
         $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
@@ -170,10 +182,50 @@ function search_associations_count($limit)
 {
     $db = getDB();
 
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
     $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
-
     $limit = min(max($limit, 1), 100);
+    $offset = ($page - 1) * $limit;
+
+    $countQuery = "SELECT COUNT(*) AS row_count FROM (
+    SELECT
+    MD.original_title AS media_title,
+    MD.year AS release_year,
+    MD.api_id,
+    COALESCE(MC.isFavorite, 0) AS isFavorite,
+    COALESCE(MC.isWatched, 0) AS isWatched,
+    COALESCE(MC.numOfStars, 0) AS numOfStars
+    FROM
+    Media_Details MD
+    JOIN
+    Media M ON MD.id = M.details_id
+    LEFT JOIN
+    User_Media_Association UMA ON M.id = UMA.media_id
+    LEFT JOIN
+    Media_Classification MC ON UMA.class_id = MC.id
+    WHERE
+    UMA.user_id = :user_id";
+
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+    if (!empty($search)) {
+        $searchTerm = "%$search%";
+        $countQuery .= " AND (M.title LIKE :searchTerm OR MD.year LIKE :searchTerm) ) AS subquery_alias";
+    } else {
+        $countQuery .= ") AS subquery_alias";
+    }
+
+    // Prepare and execute the count query
+    $countStmt = $db->prepare($countQuery);
+
+    $user_id = get_user_id();
+    $countStmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    if (!empty($search)) {
+        $countStmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
+    }
+
+    $countStmt->execute();
+    $totalRows = $countStmt->fetchColumn();
 
     $query = "SELECT COUNT(*) AS row_count FROM (
     SELECT
@@ -198,15 +250,15 @@ function search_associations_count($limit)
 
     if (!empty($search)) {
         $searchTerm = "%$search%";
-        $query .= " AND (M.title LIKE :searchTerm OR MD.year LIKE :searchTerm) ) AS subquery_alias";
+        $query .= " AND (M.title LIKE :searchTerm OR MD.year LIKE :searchTerm) LIMIT :limit OFFSET :offset) AS subquery_alias";
     } else {
-        $query .= ") AS subquery_alias";
+        $query .= " LIMIT :limit OFFSET :offset) AS subquery_alias";
     }
 
     // Limiting records
-    $query .= " LIMIT :limit";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 
     if (!empty($search)) {
         $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
@@ -227,7 +279,7 @@ function search_associations_count($limit)
         error_log(var_export($e, true));
         return -1;
     }
-    return $results;
+    return ["results" => $results, "totalRows" => $totalRows];
 }
 
 function delete_all_associations()
@@ -283,20 +335,22 @@ function delete_all_associations_onscreen($results)
     }
 }
 
-function delete_an_association($media_id, $user_id = "")
+function delete_an_association($media_id = "", $user_id = "")
 {
     $db = getDB();
 
     error_log(var_export($_POST, true));
+    $media_id = $_POST["id"];
 
     $query = "DELETE FROM Media_Classification WHERE id = (SELECT class_id FROM User_Media_Association WHERE
     user_id = :user_id AND media_id = :media_id)";
 
     $stmt = $db->prepare($query);
-    if ($user_id = "")
+    if (empty($user_id))
         $user_id = get_user_id();
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_STR);
     $stmt->bindParam(':media_id', $media_id, PDO::PARAM_STR);
+
 
     $results = [];
 
@@ -337,10 +391,11 @@ function search_all_associations()
 {
     $db = getDB();
 
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
     $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
-
     $limit = min(max($limit, 1), 100);
+    $offset = ($page - 1) * $limit;
 
     $query = "SELECT
     M.id,
@@ -392,9 +447,10 @@ LEFT JOIN
     $query .= " ORDER BY $sort $sortOrder";
 
     // Limiting records
-    $query .= " LIMIT :limit";
+    $query .= " LIMIT :limit OFFSET :offset";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 
     if (!empty($search)) {
         $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
@@ -418,10 +474,11 @@ function search_all_non_associations()
 {
     $db = getDB();
 
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
     $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
-
     $limit = min(max($limit, 1), 100);
+    $offset = ($page - 1) * $limit;
 
     $query = "SELECT
     M.id,
@@ -450,9 +507,10 @@ function search_all_non_associations()
     $query .= " ORDER BY $sort $sortOrder";
 
     // Limiting records
-    $query .= " LIMIT :limit";
+    $query .= " LIMIT :limit OFFSET :offset";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 
     if (!empty($search)) {
         $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
@@ -476,10 +534,50 @@ function search_all_associations_count($limit)
 {
     $db = getDB();
 
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
     $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
-
     $limit = min(max($limit, 1), 100);
+    $offset = ($page - 1) * $limit;
+
+    $countQuery = "SELECT COUNT(*) AS row_count FROM (
+    SELECT
+    M.id,
+    U.username,
+    MD.original_title AS media_title,
+    MD.year AS release_year,
+    MD.api_id,
+    COALESCE(MC.isFavorite, 0) AS isFavorite,
+    COALESCE(MC.isWatched, 0) AS isWatched,
+    COALESCE(MC.numOfStars, 0) AS numOfStars
+FROM
+    User_Media_Association UMA
+LEFT JOIN
+    Users U ON U.id = UMA.user_id
+LEFT JOIN
+    Media M ON UMA.media_id = M.id
+LEFT JOIN
+    Media_Details MD ON M.details_id = MD.id
+LEFT JOIN
+    Media_Classification MC ON UMA.class_id = MC.id";
+
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+    if (!empty($search)) {
+        $searchTerm = "%$search%";
+        $countQuery .= " AND (M.title LIKE :searchTerm OR MD.year LIKE :searchTerm) ) AS subquery_alias";
+    } else {
+        $countQuery .= ") AS subquery_alias";
+    }
+
+    // Prepare and execute the count query
+    $countStmt = $db->prepare($countQuery);
+
+    if (!empty($search)) {
+        $countStmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
+    }
+
+    $countStmt->execute();
+    $totalRows = $countStmt->fetchColumn();
 
     $query = "SELECT COUNT(*) AS row_count FROM (
     SELECT
@@ -503,21 +601,18 @@ LEFT JOIN
     Media_Classification MC ON UMA.class_id = MC.id";
 
     $search = isset($_GET['search']) ? $_GET['search'] : '';
-    $searchArray = ['title' => 'M.title', 'year' => 'MD.year', 'username' => 'U.username'];
-    if (isset($_GET['searchType'])) {
-        if (!empty($search)) {
-            $searchTerm = "%$search%";
-            $query .= " WHERE " . $searchArray[$_GET['searchType']] . " LIKE :searchTerm ) AS subquery_alias";
-        } else {
-            $query .= ") AS subquery_alias";
-        }
+
+    if (!empty($search)) {
+        $searchTerm = "%$search%";
+        $query .= " AND (M.title LIKE :searchTerm OR MD.year LIKE :searchTerm) LIMIT :limit OFFSET :offset) AS subquery_alias";
     } else {
-        $query .= ") AS subquery_alias";
+        $query .= " LIMIT :limit OFFSET :offset) AS subquery_alias";
     }
 
-    $query .= " LIMIT :limit";
+    // Limiting records
     $stmt = $db->prepare($query);
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 
     if (!empty($search)) {
         $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
@@ -533,17 +628,47 @@ LEFT JOIN
         error_log(var_export($e, true));
         return -1;
     }
-    return $results;
+    return ["results" => $results, "totalRows" => $totalRows];
 }
 
 function search_all_non_associations_count($limit)
 {
     $db = getDB();
 
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
     $limit = ($limit < 1 || $limit > 100) ? 10 : $limit;
-
     $limit = min(max($limit, 1), 100);
+    $offset = ($page - 1) * $limit;
+
+    $countQuery = "SELECT COUNT(*) AS row_count FROM (
+    SELECT
+    M.id,
+    MD.original_title AS media_title,
+    MD.year AS release_year,
+    MD.api_id
+    FROM Media M
+    LEFT JOIN Media_Details MD ON M.details_id = MD.id
+    LEFT JOIN User_Media_Association UMA ON M.id = UMA.media_id
+    WHERE UMA.id IS NULL";
+
+    $search = isset($_GET['search']) ? $_GET['search'] : '';
+    if (!empty($search)) {
+        $searchTerm = "%$search%";
+        $countQuery .= " AND (M.title LIKE :searchTerm OR MD.year LIKE :searchTerm) ) AS subquery_alias";
+    } else {
+        $countQuery .= ") AS subquery_alias";
+    }
+
+    // Prepare and execute the count query
+    $countStmt = $db->prepare($countQuery);
+
+    if (!empty($search)) {
+        $countStmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
+    }
+
+    $countStmt->execute();
+    $totalRows = $countStmt->fetchColumn();
 
     $query = "SELECT COUNT(*) AS row_count FROM (
     SELECT
@@ -557,21 +682,18 @@ function search_all_non_associations_count($limit)
     WHERE UMA.id IS NULL";
 
     $search = isset($_GET['search']) ? $_GET['search'] : '';
-    $searchArray = ['title' => 'M.title', 'year' => 'MD.year', 'username' => 'U.username'];
-    if (isset($_GET['searchType'])) {
-        if (!empty($search)) {
-            $searchTerm = "%$search%";
-            $query .= " WHERE " . $searchArray[$_GET['searchType']] . " LIKE :searchTerm ) AS subquery_alias";
-        } else {
-            $query .= ") AS subquery_alias";
-        }
+
+    if (!empty($search)) {
+        $searchTerm = "%$search%";
+        $query .= " AND (M.title LIKE :searchTerm OR MD.year LIKE :searchTerm) LIMIT :limit OFFSET :offset) AS subquery_alias";
     } else {
-        $query .= ") AS subquery_alias";
+        $query .= " LIMIT :limit OFFSET :offset) AS subquery_alias";
     }
 
-    $query .= " LIMIT :limit";
+    // Limiting records
     $stmt = $db->prepare($query);
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
 
     if (!empty($search)) {
         $stmt->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
@@ -587,7 +709,7 @@ function search_all_non_associations_count($limit)
         error_log(var_export($e, true));
         return -1;
     }
-    return $results;
+    return ["results" => $results, "totalRows" => $totalRows];
 }
 
 function search_associations_by_user($user_id)
@@ -688,13 +810,11 @@ function search_associations_count_by_user($limit, $user_id)
 
     if (!empty($search)) {
         $searchTerm = "%$search%";
-        $query .= " AND (M.title LIKE :searchTerm OR MD.year LIKE :searchTerm) ) AS subquery_alias";
+        $query .= " AND (M.title LIKE :searchTerm OR MD.year LIKE :searchTerm) LIMIT :limit) AS subquery_alias";
     } else {
-        $query .= ") AS subquery_alias";
+        $query .= " LIMIT :limit) AS subquery_alias";
     }
 
-    // Limiting records
-    $query .= " LIMIT :limit";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
 

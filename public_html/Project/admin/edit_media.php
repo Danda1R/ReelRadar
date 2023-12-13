@@ -13,6 +13,7 @@ $sort = isset($_GET['sort']) && in_array($_GET['sort'], $sortableColumns) ? $_GE
 $sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'DESC' : 'ASC'; // Default order ASC
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 
 $ignore = ["id", "modified", "created", "api_id", "api_image_id", "submit"];
 
@@ -91,9 +92,9 @@ if (count($results) == 0) {
 ?>
 <div class="container-fluid">
     <div class="button-container-left">
-        <a href="../list_media.php?search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button back-button">Back</a>
-        <a href="../single_media_view.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button">View</a>
-        <a href="delete_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button delete-button">Delete</a>
+        <a href="../list_media.php?search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>&page=<?php echo $page; ?>" class="button back-button">Back</a>
+        <a href="../single_media_view.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>&page=<?php echo $page; ?>" class="button">View</a>
+        <a href="delete_media.php?id=<?php echo $media_id; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>&page=<?php echo $page; ?>" class="button delete-button">Delete</a>
     </div>
     <h1>Edit Media</h1>
     <form method="POST">

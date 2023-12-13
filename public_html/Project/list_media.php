@@ -13,9 +13,13 @@ $sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'D
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-//echo "<pre>" . var_export(count($results), true) . "</pre>";
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 
-if (count($results) == 0) {
+$totalPages = ceil($results["totalRows"] / $limit);
+
+//echo "<pre>" . var_export($totalPages, true) . "</pre>";
+
+if (count($results["results"]) == 0) {
     flash("There are no current media matching this description available.", "warning");
     die(header("Location: list_media.php"));
 }
@@ -35,12 +39,18 @@ if (count($results) == 0) {
         <option value="ASC" <?php echo $sortOrder === 'ASC' ? 'selected' : ''; ?>>Ascending</option>
         <option value="DESC" <?php echo $sortOrder === 'DESC' ? 'selected' : ''; ?>>Descending</option>
     </select>
+    <div class="page-navigation">
+        <label for="page">Page:</label>
+        <div class="page-arrows">
+            <input type="number" id="page" name="page" min="1" max=<?php echo $totalPages ?> value="<?php echo htmlspecialchars($page); ?>" style="width: 50px;">
+        </div>
+    </div>
     <button type="submit">Apply</button>
 </form>
 
 <div class="card-gallery">
     <?php if (count($results) > 0) : ?>
-        <?php foreach ($results as $row) : ?>
+        <?php foreach ($results['results'] as $row) : ?>
             <div class="card">
                 <div class="card-mini-details">
                     <div class="card-mini-column">
@@ -57,9 +67,9 @@ if (count($results) == 0) {
                 <!--<img src="<?php echo htmlspecialchars($row['media_image_url']); ?>" alt="Media Image">-->
 
                 <div class="button-container">
-                    <a href="single_media_view.php?id=<?php echo $row['media_id']; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button">View</a>
-                    <a href="admin/delete_media.php?id=<?php echo $row['media_id']; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button delete-button">Delete</a>
-                    <a href="admin/edit_media.php?id=<?php echo $row['media_id']; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>" class="button edit-button">Edit</a>
+                    <a href="single_media_view.php?id=<?php echo $row['media_id']; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>&page=<?php echo $page; ?>" class="button">View</a>
+                    <a href="admin/delete_media.php?id=<?php echo $row['media_id']; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>&page=<?php echo $page; ?>" class="button delete-button">Delete</a>
+                    <a href="admin/edit_media.php?id=<?php echo $row['media_id']; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>&page=<?php echo $page; ?>" class="button edit-button">Edit</a>
                 </div>
                 <div class="button-container">
                     <button class="button star-button <?php echo $row['isFavorite'] == 1 ? 'filled' : ''; ?>" data-media-id="<?php echo $row['media_id']; ?>" data-user-id="<?php echo get_user_id(); ?>" data-action="star">
