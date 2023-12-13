@@ -27,16 +27,20 @@ session_start();
 <!-- include bootstrap css and js references -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <!-- include css and js files -->
 <link rel="stylesheet" href="<?php echo get_url('styles.css'); ?>">
 <script src="<?php echo get_url('helpers.js'); ?>"></script>
+<script src="<?php echo get_url('actions.js'); ?>"></script>
 <nav>
     <ul>
         <?php if (is_logged_in()) : ?>
             <li><a href="<?php echo get_url('home.php'); ?>">Home</a></li>
             <li><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
             <li><a href="<?php echo get_url('list_media.php?search=&limit=10&sort=title&order=ASC'); ?>">Media Page</a></li>
+            <li><a href="<?php echo get_url('list_associations.php?search=&limit=10&sort=title&order=ASC'); ?>">Your Associations</a></li>
         <?php endif; ?>
         <?php if (!is_logged_in()) : ?>
             <li><a href="<?php echo get_url('login.php'); ?>">Login</a></li>
@@ -56,6 +60,14 @@ session_start();
                 <ul class="dropdown-menu">
                     <li><a href="<?php echo get_url('admin/add_media.php'); ?>">Add Media</a></li>
                     <li><a href="<?php echo get_url('admin/add_api_media.php'); ?>">Add Media From API</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle">All Associations <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?php echo get_url('admin/list_all_associations.php'); ?>">List All Associations</a></li>
+                    <li><a href="<?php echo get_url('admin/list_all_non_associations.php'); ?>">List All Non-Associations</a></li>
+                    <li><a href="<?php echo get_url('admin/add_associations.php'); ?>">Add Associations</a></li>
                 </ul>
             </li>
         <?php endif; ?>
