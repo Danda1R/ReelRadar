@@ -69,8 +69,8 @@ if (isset($_POST["submit"])) {
     </form>
 <?php endif; ?>
 <h3>View All Associations</h3>
-<h5>Total number of associations with this account: <?php echo $count ?></h5>
-<h5>Total number of associations on this page: <?php echo $numOfPage ?></h5>
+<h5>Total number of associations with all users: <?php echo $count ?></h5>
+<h5>Total number of associations with this user: <?php echo $numOfPage ?></h5>
 
 <?php if (count($results) == 0) : ?>
     <p>No results to show</p>

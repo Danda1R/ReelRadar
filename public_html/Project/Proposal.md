@@ -1,6 +1,6 @@
 ## Project Name: rrd42-IT202-007
 
-### Project Summary: This project will primarily use data pull from an API to do something project-specific.
+### Project Summary: This project will primarily use data pull from an API to do something project-specific. This project is a media review website, where users can label media as watched, favorite and a rating from 1 to 5. They can also see the most popular media from all users.
 
 ### Github Link: https://github.com/Danda1R/rrd42-IT202-007/tree/prod
 
@@ -19,8 +19,6 @@
 - Milestone 2
   - https://github.com/Danda1R/rrd42-IT202-007/blob/Milestone2/public_html/Project/milestone2.md
 - Milestone 3
-  - (add link to milestone3.md from milestone3 branch)
-- Milestone 4
-  - (add link to milestone4.md from milestone4 branch)
+  - https://github.com/Danda1R/rrd42-IT202-007/blob/Milestone3/public_html/Project/milestone3.md
 - Demo Link
   - (add youtube link to unlisted or public demo) Note you'll need to verify your youtube account to upload videos > 15mins

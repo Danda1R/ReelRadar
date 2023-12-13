@@ -11,8 +11,9 @@ function search_media($table)
     $limit = min(max($limit, 1), 100);
     $offset = ($page - 1) * $limit;
 
-    // Query to get total count and retrieve paginated results
-    $countQuery = "SELECT COUNT(*) AS total FROM Media"; // Replace 'Media' with your actual table name and JOINs if necessary
+    $countQuery = "SELECT COUNT(*) AS total FROM Media
+    JOIN Media_Details ON Media.details_id = Media_Details.id
+    JOIN Media_Genre ON Media.genre_id = Media_Genre.id";
 
     // Adjust the count query based on your search criteria, if any
     $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -172,7 +173,7 @@ function get_average_rating($media_id)
 
     return $averageResults[0]["averageStars"];
 }
-
+//Rishik Danda - 12/13/23
 function search_associations()
 {
     $db = getDB();
@@ -453,6 +454,7 @@ function delete_an_association_onscreen($class_id)
 
 function search_all_associations()
 {
+    //Rishik Danda - 12/13/23
     $db = getDB();
 
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -536,6 +538,7 @@ LEFT JOIN
 
 function search_all_non_associations()
 {
+    //Rishik Danda - 12/13/23
     $db = getDB();
 
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
