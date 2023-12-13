@@ -7,7 +7,6 @@ is_logged_in(true);
 
 $results = search_associations($_GET);
 
-
 $sortableColumns = ['title', 'year', 'numOfStars'];
 $sort = isset($_GET['sort']) && in_array($_GET['sort'], $sortableColumns) ? $_GET['sort'] : 'media_title'; // Default sorting by title
 $sortOrder = isset($_GET['order']) && strtoupper($_GET['order']) === 'DESC' ? 'DESC' : 'ASC'; // Default order ASC
@@ -30,6 +29,11 @@ if (isset($_POST["submit"])) {
         //error_log(var_export($_POST, true));
         die(header("Location: list_associations.php?search=$search&limit=$limit&sort=$sort&order=$sortOrder&page=$page"));
     }
+}
+
+if (count($results) == 0) {
+    flash("None of the associations matching your search", "warning");
+    die(header("Location: list_associations.php"));
 }
 
 ?>
@@ -63,7 +67,7 @@ if (isset($_POST["submit"])) {
 <h3>View Your Associations</h3>
 <h5>Total number of associations with this account: <?php echo $count ?></h5>
 <h5>Total number of associations on this page: <?php echo $numOfPage ?></h5>
-
+<!-- Rishik Danda - 12/13/23 -->
 <?php if (count($results) == 0) : ?>
     <p>No results to show</p>
 <?php else : ?>

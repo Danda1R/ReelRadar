@@ -1,7 +1,7 @@
 <?php
 require(__DIR__ . "/../../../partials/nav.php");
 is_logged_in(true, "../login.php");
-
+//Rishik Danda - 12/13/23
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     error_log(var_export($_POST, true));
     if (isset($_POST['userCheckbox']) && isset($_POST['mediaCheckbox'])) {

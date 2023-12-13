@@ -1,5 +1,5 @@
 <?php
-
+//Rishik Danda - 12/13/23
 function add_to_star($mediaId, $userId)
 {
     $db = getDB();

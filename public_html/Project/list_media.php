@@ -71,6 +71,7 @@ if (count($results["results"]) == 0) {
                     <a href="admin/delete_media.php?id=<?php echo $row['media_id']; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>&page=<?php echo $page; ?>" class="button delete-button">Delete</a>
                     <a href="admin/edit_media.php?id=<?php echo $row['media_id']; ?>&search=<?php echo $search; ?>&limit=<?php echo $limit; ?>&sort=<?php echo $sort; ?>&order=<?php echo $sortOrder; ?>&page=<?php echo $page; ?>" class="button edit-button">Edit</a>
                 </div>
+                <!-- Rishik Danda - 12/13/23-->
                 <div class="button-container">
                     <button class="button star-button <?php echo $row['isFavorite'] == 1 ? 'filled' : ''; ?>" data-media-id="<?php echo $row['media_id']; ?>" data-user-id="<?php echo get_user_id(); ?>" data-action="star">
                         <i class="fas fa-star <?php echo $row['isFavorite'] == 1 ? 'filled' : ''; ?>"></i>
