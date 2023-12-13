@@ -161,6 +161,22 @@ footer {
   /* You can adjust the width value as needed */
 }
 
+.star-button,
+.eye-button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  margin-left: 20px;
+}
+
+.star-button.filled {
+  background-color: #eb9744;
+}
+
+.eye-button.filled {
+  background-color: #5bc0de;
+}
+
 .star-button i.fa-star.filled {
   color: gold; /* Change the color to indicate filled */
 }
@@ -175,7 +191,7 @@ footer {
 
 .star {
   display: inline-block;
-  font-size: 25px;
+  font-size: 50px;
   cursor: pointer;
 }
 
@@ -257,4 +273,102 @@ th {
 
 .form-submit input[type='submit']:hover {
   background-color: #0056b3;
+}
+
+.card-details {
+  display: flex;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 90%;
+  height: 100%;
+  max-height: 600px;
+  margin: 15px auto;
+}
+
+.media-details {
+  display: flex;
+  flex-direction: column;
+  margin: 1%;
+}
+
+.media-title {
+  width: 50%;
+}
+
+.media-type-details {
+  width: 50%;
+}
+
+.media-api-details {
+  width: 60%;
+}
+
+.media-details h2 {
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+}
+
+.media-details h2 .year {
+  margin-left: 10px; /* Adjust the spacing between title and year */
+  font-family: Arial, sans-serif; /* Change the font family */
+  color: #4d4d4d97; /* Change the color */
+  font-size: 18px; /* Change the font size */
+}
+
+.media-details p {
+  margin-bottom: 8px;
+}
+
+.media-type-details p,
+.media-api-details p {
+  font-family: Arial, sans-serif;
+  color: #14141497;
+  font-size: 28px;
+}
+
+.media-details img {
+  width: 70%;
+  display: block;
+  border: 2px solid #333;
+  border-radius: 8px;
+  margin: auto;
+}
+
+.media-details p.caption {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  width: 400px;
+  height: 400px;
+  display: inline-block;
+  float: left;
+}
+
+.card img {
+  width: auto;
+  height: 90px;
+}
+
+.icon {
+  position: absolute;
+  top: 10px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.star {
+  right: 10px;
+}
+
+.eye {
+  right: 40px;
 }

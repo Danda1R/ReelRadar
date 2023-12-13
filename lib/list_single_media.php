@@ -27,6 +27,8 @@ function list_single_media($table)
     MD.release_date,
     MD.image_url,
     MD.image_caption,
+    MD.created,
+    MD.modified,
     ML.name AS list_name,
     MG.name AS genre_name,
     MT.name AS type_name,
