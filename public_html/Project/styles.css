@@ -163,7 +163,7 @@ footer {
 
 .star-button,
 .eye-button {
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 20px;
   padding-bottom: 20px;
   margin-left: 20px;
@@ -348,14 +348,23 @@ th {
   padding: 10px;
   margin: 10px;
   width: 400px;
-  height: 400px;
+  height: 500px;
   display: inline-block;
   float: left;
 }
 
-.card img {
-  width: auto;
-  height: 90px;
+.card-mini-details {
+  display: flex;
+  background-color: #fff;
+  margin: 15px auto;
+}
+
+.card-mini-column {
+  width: 50%;
+}
+
+.card-mini-column img {
+  height: 200px;
 }
 
 .icon {

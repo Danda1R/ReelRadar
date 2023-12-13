@@ -42,10 +42,18 @@ if (count($results) == 0) {
     <?php if (count($results) > 0) : ?>
         <?php foreach ($results as $row) : ?>
             <div class="card">
-                <h3><?php echo htmlspecialchars($row['media_title']); ?></h3>
-                <?php echo ($row['api_id'] !== null) ? "<p>Created by API. API ID: " . htmlspecialchars($row['api_id']) . "</p>" : "<p>Created manually</p>"; ?>
-                <p>Year: <?php echo htmlspecialchars($row['media_year']); ?></p>
-                <p>Genre: <?php echo htmlspecialchars($row['genre_name']); ?></p>
+                <div class="card-mini-details">
+                    <div class="card-mini-column">
+                        <h3><?php echo htmlspecialchars($row['media_title']); ?></h3>
+                        <?php echo ($row['api_id'] !== null) ? "<p>Created by API. API ID: " . htmlspecialchars($row['api_id']) . "</p>" : "<p>Created manually</p>"; ?>
+                        <p>Year: <?php echo htmlspecialchars($row['media_year']); ?></p>
+                        <p>Genre: <?php echo htmlspecialchars($row['genre_name']); ?></p>
+                    </div>
+                    <div class="card-mini-column">
+                        <img src="<?php echo htmlspecialchars($row['media_image_url']); ?>" alt="Media Image">
+                    </div>
+                </div>
+
                 <!--<img src="<?php echo htmlspecialchars($row['media_image_url']); ?>" alt="Media Image">-->
 
                 <div class="button-container">
