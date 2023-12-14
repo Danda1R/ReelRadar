@@ -27,8 +27,8 @@
 </td></tr>
 </table></td></tr>
 <tr><td> <em>Sub-Task 3: </em> Include any Heroku prod links to pages that would trigger entity to user association</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/list_media.php?search=&limit=10&sort=title&order=ASC">https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/list_media.php?search=&limit=10&sort=title&order=ASC</a> </td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/single_media_view.php?id=63&search=&limit=10&sort=title&order=ASC&page=1">https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/single_media_view.php?id=63&search=&limit=10&sort=title&order=ASC&page=1</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/list_media.php?search=&limit=10&sort=title&order=ASC">https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/list_media.php?search=&limit=10&sort=title&order=ASC</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/single_media_view.php?id=63&search=&limit=10&sort=title&order=ASC&page=1">https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/single_media_view.php?id=63&search=&limit=10&sort=title&order=ASC&page=1</a> </td></tr>
 <tr><td> <em>Sub-Task 4: </em> Include any PRs related to this task</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Danda1R/rrd42-IT202-007/pull/93">https://github.com/Danda1R/rrd42-IT202-007/pull/93</a> </td></tr>
 </table></td></tr>
@@ -50,7 +50,7 @@
 </td></tr>
 </table></td></tr>
 <tr><td> <em>Sub-Task 3: </em> Add Heroku Prod links to the page(s) where the logged in user has their entities listed</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/list_associations.php?search=&limit=10&sort=title&order=ASC">https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/list_associations.php?search=&limit=10&sort=title&order=ASC</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/list_associations.php?search=&limit=10&sort=title&order=ASC">https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/list_associations.php?search=&limit=10&sort=title&order=ASC</a> </td></tr>
 <tr><td> <em>Sub-Task 4: </em> Include any PRs related to this task</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Danda1R/rrd42-IT202-007/pull/94">https://github.com/Danda1R/rrd42-IT202-007/pull/94</a> </td></tr>
 </table></td></tr>
@@ -69,7 +69,7 @@
 </td></tr>
 </table></td></tr>
 <tr><td> <em>Sub-Task 3: </em> Add Heroku Prod links to the page(s) where entities associated to many users can be seen</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/admin/list_all_associations.php?searchType=username&search=rishik&limit=4&sort=year&order=ASC&page=1">https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/admin/list_all_associations.php?searchType=username&search=rishik&limit=4&sort=year&order=ASC&page=1</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/admin/list_all_associations.php">https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/admin/list_all_associations.php</a> </td></tr>
 <tr><td> <em>Sub-Task 4: </em> Include any PRs related to this task</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Danda1R/rrd42-IT202-007/pull/95">https://github.com/Danda1R/rrd42-IT202-007/pull/95</a> </td></tr>
 </table></td></tr>
@@ -86,7 +86,7 @@
 </td></tr>
 </table></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Add Heroku Prod links to the page(s) where unassociated entities can be seen</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/admin/list_all_non_associations.php?searchType=year&search=2023&limit=2&sort=year&order=ASC&page=1">https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/admin/list_all_non_associations.php?searchType=year&search=2023&limit=2&sort=year&order=ASC&page=1</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/admin/list_all_non_associations.php">https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/admin/list_all_non_associations.php</a> </td></tr>
 <tr><td> <em>Sub-Task 3: </em> Include any PRs related to this task</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Danda1R/rrd42-IT202-007/pull/96">https://github.com/Danda1R/rrd42-IT202-007/pull/96</a> </td></tr>
 </table></td></tr>
@@ -111,7 +111,7 @@
 <tr><td> <em>Sub-Task 2: </em> Explain the code logic for this page</td></tr>
 <tr><td> <em>Response:</em> <p>SQL statements are used to get all the users and media in the<br>database. They input the partial filter as part of the WHERE clause using<br>a LIKE clause to match to usernames and media titles partially. The results<br>are converted into an array and inserted into a post form using a<br>for loop. Each user and media has a checkbox to select it for<br>the associations. When the apply button is clicked, the post request is sent<br>and looped through each pair of user and media. For each user and<br>media pair, the association specified are made by updating the association page or<br>inserting the association page if it already does not exist.<br></p><br></td></tr>
 <tr><td> <em>Sub-Task 3: </em> Add Heroku Prod links to the page(s) related to this task</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/admin/add_associations.php">https://it202-rrd42-dev-3cbbb1b8bda5.herokuapp.com/Project/admin/add_associations.php</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/admin/add_associations.php">https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project/admin/add_associations.php</a> </td></tr>
 <tr><td> <em>Sub-Task 4: </em> Include any PRs related to this task</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Danda1R/rrd42-IT202-007/pull/97">https://github.com/Danda1R/rrd42-IT202-007/pull/97</a> </td></tr>
 </table></td></tr>
