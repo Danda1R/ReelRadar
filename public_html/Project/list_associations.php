@@ -31,11 +31,6 @@ if (isset($_POST["submit"])) {
     }
 }
 
-if (count($results) == 0) {
-    flash("None of the associations matching your search", "warning");
-    die(header("Location: list_associations.php"));
-}
-
 ?>
 <form action="" method="GET" id="searchAndSortForm">
     <input type="text" name="search" class="search-bar" placeholder="Search by title or year" value="<?php echo htmlspecialchars($search); ?>">
