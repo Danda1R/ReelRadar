@@ -57,6 +57,23 @@ if (isset($_POST["submit"])) {
         $media_details_id = $results[0]["media_details_id"];
 
         $db = getDB();
+
+        $query = "DELETE FROM Media_Classification
+        WHERE id IN ( SELECT um.class_id
+        FROM User_Media_Association um
+        WHERE um.media_id = :media_id)";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':media_id', $media_id, PDO::PARAM_INT);
+        $results = [];
+        try {
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            flash("The media was not deleted", "danger");
+            error_log(var_export($e, true));
+            return -1;
+        }
+
         $query = "DELETE FROM Media WHERE id = :media_id";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':media_id', $media_id, PDO::PARAM_INT);
