@@ -1,6 +1,6 @@
 ## Project Name: rrd42-IT202-007
 
-### Project Summary: This project will primarily use data pull from an API to do something project-specific. This project is a media review website, where users can label media as watched, favorite and a rating from 1 to 5. They can also see the most popular media from all users.
+### Project Summary: This project will primarily use data pulled from an API to do something project-specific. This project is a media review website, where users can label media as watched, favorite, and a rating from 1 to 5. They can also see the most popular media from all users.
 
 ### Github Link: https://github.com/Danda1R/rrd42-IT202-007/tree/prod
 
@@ -8,7 +8,7 @@
 
 ### Website Link: https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project
 
-### API Link: https://moviesdatabase.p.rapidapi.com
+### API Link: https://rapidapi.com/SAdrian/api/moviesdatabase
 
 ### Your Name: Rishik Danda
 
