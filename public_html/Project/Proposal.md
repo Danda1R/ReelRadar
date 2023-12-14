@@ -4,7 +4,7 @@
 
 ### Github Link: https://github.com/Danda1R/rrd42-IT202-007/tree/prod
 
-### Project Board Link: https://github.com/users/Danda1R/projects/9
+### Project Board Link: https://github.com/users/Danda1R/projects/11
 
 ### Website Link: https://it202-rrd42-prod-2f24ad61807f.herokuapp.com/Project
 
@@ -21,4 +21,4 @@
 - Milestone 3
   - https://github.com/Danda1R/rrd42-IT202-007/blob/Milestone3/public_html/Project/milestone3.md
 - Demo Link
-  - (add youtube link to unlisted or public demo) Note you'll need to verify your youtube account to upload videos > 15mins
+  - https://youtu.be/vsBV64Yj8_o
